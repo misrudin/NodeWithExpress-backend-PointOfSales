@@ -11,7 +11,7 @@ module.exports = {
             .catch(err => console.log(err));
     },
     insertCategory: (req, res) => {
-        const nama = req.body.category
+        const nama = req.body.category;
         const data = {
             nama_category: nama
         }
@@ -24,7 +24,7 @@ module.exports = {
     },
     updateCategory: (req, res) => {
         const id_category = req.params.id_category;
-        const nama = req.body.category
+        const nama = req.body.category;
         const data = {
             nama_category: nama
         }
@@ -37,7 +37,7 @@ module.exports = {
     },
 
     deleteCategory: (req, res) => {
-        const id_category = req.params.id_category
+        const id_category = req.params.id_category;
 
         categoryModel.deleteCategory(id_category)
             .then((result) => {

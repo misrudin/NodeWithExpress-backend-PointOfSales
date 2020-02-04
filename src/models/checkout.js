@@ -11,7 +11,7 @@ module.exports = {
                                 if (resultp.length > 0) {
                                     resultp.forEach((i) => {
                                         if (i.stok < 1 || i.stok < e.qty) {
-                                            console.log(`Stok: ${i.name} Empty!`)
+                                            console.log(`Stok: ${i.name} Empty!`);
                                         } else {
                                             const total = e.qty * i.price
                                             const date_pay = new Date();
@@ -22,21 +22,21 @@ module.exports = {
                                                 qty: e.qty,
                                                 total: total
                                             }
-                                            conn.query("INSERT INTO payment SET ?", data)
-                                            conn.query("DELETE FROM cart WHERE id_user=? AND id_product=?", [id_user, e.id_product])
-                                            conn.query("UPDATE product_name SET stok=stok - ? WHERE id=?", [e.qty, e.id_product])
-                                            console.log(`Stok: ${i.name} Empty!`)
+                                            conn.query("INSERT INTO payment SET ?", data);
+                                            conn.query("DELETE FROM cart WHERE id_user=? AND id_product=?", [id_user, e.id_product]);
+                                            conn.query("UPDATE product_name SET stok=stok - ? WHERE id=?", [e.qty, e.id_product]);
+                                            console.log(`Stok: ${i.name} Empty!`);
                                         }
-                                    })
+                                    });
                                 }
-                                reslove('Checkout!')
-                            })
-                        })
+                                reslove('Checkout!');
+                            });
+                        });
                     } else {
-                        reslove("Cart is Empty!")
+                        reslove("Cart is Empty!");
                     }
                 } else {
-                    reject(new Error(err))
+                    reject(new Error(err));
                 }
             })
         })
@@ -53,7 +53,7 @@ module.exports = {
                                 if (resultp.length > 0) {
                                     resultp.forEach((i) => {
                                         if (i.stok < 1 || i.stok < e.qty) {
-                                            console.log(`Stok: ${i.name} Empty!`)
+                                            console.log(`Stok: ${i.name} Empty!`);
                                         } else {
                                             const total = e.qty * i.price
                                             const date_pay = new Date();
@@ -64,25 +64,25 @@ module.exports = {
                                                 qty: e.qty,
                                                 total: total
                                             }
-                                            conn.query("INSERT INTO payment SET ?", data)
+                                            conn.query("INSERT INTO payment SET ?", data);
                                             conn.query("DELETE FROM cart WHERE id=?", id_cart)
-                                            conn.query("UPDATE product_name SET stok=stok - ? WHERE id=?", [e.qty, e.id_product])
-                                            console.log(`Stok: ${i.name} Empty!`)
+                                            conn.query("UPDATE product_name SET stok=stok - ? WHERE id=?", [e.qty, e.id_product]);
+                                            console.log(`Stok: ${i.name} Empty!`);
                                         }
-                                    })
+                                    });
                                 }
-                                reslove('Checkout!')
-                            })
-                        })
+                                reslove('Checkout!');
+                            });
+                        });
                     } else {
-                        reslove("Cart Not found")
+                        reslove("Cart Not found");
                     }
                 } else {
-                    reject(new Error(err))
+                    reject(new Error(err));
                 }
-            })
-        })
+            });
+        });
     }
 
 
-}
+}//end code

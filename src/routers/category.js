@@ -7,11 +7,10 @@ const categoryController = require('../controllers/category');
 
 
 
-Router
-    .get('/', auth.verify, categoryController.getCategory)
-    .post('/', auth.verify, categoryController.insertCategory)
-    .patch('/:id_category', auth.verify, categoryController.updateCategory)
-    .delete('/:id_category', auth.verify, categoryController.deleteCategory)
+Router.get('/', auth.verify, categoryController.getCategory);
+Router.post('/', auth.verify, categoryController.insertCategory);
+Router.patch('/:id_category', auth.verify, categoryController.updateCategory);
+Router.delete('/:id_category', auth.verify, categoryController.deleteCategory);
 
 
 module.exports = Router;

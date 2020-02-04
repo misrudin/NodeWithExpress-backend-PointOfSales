@@ -1,22 +1,6 @@
-const productModel = require('../models/product')
-const miscHElper = require('../helpers/helpers')
+const productModel = require('../models/product');
+const miscHElper = require('../helpers/helpers');
 const jwt = require('jsonwebtoken');
-const multer = require('multer');
-
-
-
-
-const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, './uploads')
-    },
-    filename: function (req, file, cb) {
-        cb(null, file.originalname)
-    }
-})
-const upload = multer({
-    storage
-})
 
 
 module.exports = {
@@ -56,12 +40,14 @@ module.exports = {
     updateProduct: (req, res) => {
         const id_product = req.params.id_product;
         const date_update = new Date()
+
         const { name, description, price, stok, id_category } = req.body;
         const data = {
             name,
             description, //kalu sama key dan valuenya gini
             price,
             stok,
+            image: `http://localhost:4001/uploads/${req.file.filename}`,
             id_category,
             update_at: date_update
         }
@@ -81,7 +67,7 @@ module.exports = {
     },
 
     fillterProduct: (req, res) => {
-        const keyword = req.body.keyword
+        const keyword = req.body.keyword;
         productModel.fillterProduct(keyword)
             .then((result) => {
                 miscHElper.response(res, result, 200)
@@ -99,7 +85,7 @@ module.exports = {
     },
 
     sortByCategory: (req, res) => {
-        const name_category = req.params.name_category
+        const name_category = req.params.name_category;
         productModel.sortByCategory(nama_category)
             .then((result) => {
                 miscHElper.response(res, result, 200)

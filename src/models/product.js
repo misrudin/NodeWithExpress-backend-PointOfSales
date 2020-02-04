@@ -1,5 +1,5 @@
 const connection = require('../configs/db');
-const fs = require('fs')
+const fs = require('fs');
 
 module.exports = {
     getProduct: () => {
@@ -10,8 +10,8 @@ module.exports = {
                 } else {
                     reject(new Error(err));
                 }
-            })
-        })
+            });
+        });
     },
 
 
@@ -23,8 +23,8 @@ module.exports = {
                 } else {
                     reject(new Error(err));
                 }
-            })
-        })
+            });
+        });
     },
     insertProduct: (data) => {
         return new Promise((resolve, reject) => {
@@ -34,39 +34,19 @@ module.exports = {
                 } else {
                     reject(new Error(err));
                 }
-            })
-        })
+            });
+        });
     },
     updateProduct: (data, id_product) => {
         return new Promise((resolve, reject) => {
-            connection.query("SELECT image FROM product_name WHERE id=?", id_product, (err, result) => {
-                const img = result[0].image.replace('http://localhost:4001/', '');
-                if (img == image) {
-                    connection.query("UPDATE product_name SET ? WHERE id = ?", [data, id_product], (err, result) => {
-                        if (!err) {
-                            resolve(result);
-                        } else {
-                            reject(new Error(err));
-                        }
-                    })
+            connection.query("UPDATE product_name SET ? WHERE id = ?", [data, id_product], (err, result) => {
+                if (!err) {
+                    resolve(result);
                 } else {
-                    fs.unlink(img, (err) => {
-                        if (err) throw err;
-                    })
-                    upload.single('image');
-                    const newImage = `http://localhost:4001/${image}`;
-                    connection.query("UPDATE product_name SET image=?,? WHERE id = ?", [newImage, data, id_product], (err, result) => {
-                        if (!err) {
-                            resolve(result);
-                        } else {
-                            reject(new Error(err));
-                        }
-                    })
+                    reject(new Error(err));
                 }
-
-
-            })
-        })
+            });
+        });
     },
     deleteProduct: (id_product) => {
         return new Promise((resolve, reject) => {
@@ -74,16 +54,16 @@ module.exports = {
                 const img = result[0].image.replace('http://localhost:4001/', '');
                 fs.unlink(img, (err) => {
                     if (err) throw err;
-                })
-            })
+                });
+            });
             connection.query("DELETE FROM product_name WHERE id = ?", id_product, (err, result) => {
                 if (!err) {
                     resolve(result);
                 } else {
                     reject(new Error(err));
                 }
-            })
-        })
+            });
+        });
     },
 
     fillterProduct: (keyword) => {
@@ -94,8 +74,8 @@ module.exports = {
                 } else {
                     reject(new Error(err));
                 }
-            })
-        })
+            });
+        });
     },
 
     pagination: (nomor) => {
@@ -103,7 +83,7 @@ module.exports = {
         const dataPage = 2;// jumlah data per halaman
         const countAllData = connection.query("SELECT COUNT(*) as total FROM product_name", (err, result) => {
             return result[0].total;
-        }) //jumlah seluruh data
+        }); //jumlah seluruh data
 
         const page = countAllData / dataPage; // mengitung jumlah halaman
 
@@ -141,8 +121,8 @@ module.exports = {
     //             } else {
     //                 reject(new Error(err));
     //             }
-    //         })
-    //     })
+    //         });
+    //     });
     // },
 
     addToCart: (data) => {
@@ -157,7 +137,7 @@ module.exports = {
                             } else {
                                 reject(new Error(err));
                             }
-                        })
+                        });
                     } else {
                         connection.query("INSERT INTO cart SET ?", data, (err, result) => {
                             if (!err) {
@@ -165,16 +145,11 @@ module.exports = {
                             } else {
                                 reject(new Error(err));
                             }
-                        })
+                        });
                     }
                 }
-            })
-
-
-
-
-
-        })
+            });
+        });
     },
 
     addStok: (stok, id_product) => {
@@ -186,8 +161,8 @@ module.exports = {
                 } else {
                     reject(new Error(err));
                 }
-            })
-        })
+            });
+        });
     }
 
-}  
+}  // end code

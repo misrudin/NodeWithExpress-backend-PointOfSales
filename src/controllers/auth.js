@@ -13,21 +13,27 @@ module.exports = {
                 if (result.length > 0) {
                     const token = jwt.sign({ result }, process.env.PRIVATE_KEY, { expiresIn: 60 * 60 * 24 })
                     res.json({
-                        token: token
-                    })
+                        token: token,
+                    });
+                    // const data = {
+                    //     id_user: result[0].id,
+                    //     token: token
+                    // }
+                    // conn.query("INSERT INTO auth SET ?", data);
                 } else {
-                    res.send('Username or Password Wrong!')
+                    res.send('Username or Password Wrong!');
                 }
             } else {
                 console.log(err);
             }
-        })
+        });
     },
 
-    logout: (req, res) => {
-        delete req.headers['my-token'];
-        res.send('logout')
-    },
+    // logout: (req, res) => {
+    //     id_user = req.params.id_user
+    //     conn.query("DELETE FROM auth WHERE id_user=?", id_user)
+    //     res.send('logout')
+    // },
 
     register: (req, res) => {
         const username = req.body.username;
@@ -43,12 +49,11 @@ module.exports = {
                 } else {
                     authModels.register(data)
                         .then((result) => {
-                            miscHelpers.response(res, result, 200)
+                            miscHelpers.response(res, result, 200);
                         })
-                        .catch(err => console.log(err))
+                        .catch(err => console.log(err));
                 }
-
             }
-        })
+        });
     }
 }
