@@ -86,7 +86,7 @@ module.exports = {
 
     sortByCategory: (req, res) => {
         const name_category = req.params.name_category;
-        productModel.sortByCategory(nama_category)
+        productModel.sortByCategory(name_category)
             .then((result) => {
                 miscHElper.response(res, result, 200)
             })

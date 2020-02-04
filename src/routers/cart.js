@@ -12,7 +12,7 @@ router.delete('/:id_cart', auth.verify, cartController.deleteCart);
 
 //checkout
 router.get('/checkout/all/:id_user', auth.verify, checkoutControler.checkoutAll);
-router.get('/checkout/:id_cart/:id_user', auth.verify, checkoutControler.checkoutById);
+router.get('/checkout/:id_user/:id_cart', auth.verify, checkoutControler.checkoutById);
 
 
 module.exports = router;

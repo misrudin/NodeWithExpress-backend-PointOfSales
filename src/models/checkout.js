@@ -11,7 +11,8 @@ module.exports = {
                                 if (resultp.length > 0) {
                                     resultp.forEach((i) => {
                                         if (i.stok < 1 || i.stok < e.qty) {
-                                            console.log(`Stok: ${i.name} Empty!`);
+                                            console.log(`Lack of: ${i.name} Stock!`);
+                                            reslove('Some products cannot be fulfilled!');
                                         } else {
                                             const total = e.qty * i.price
                                             const date_pay = new Date();
@@ -25,11 +26,11 @@ module.exports = {
                                             conn.query("INSERT INTO payment SET ?", data);
                                             conn.query("DELETE FROM cart WHERE id_user=? AND id_product=?", [id_user, e.id_product]);
                                             conn.query("UPDATE product_name SET stok=stok - ? WHERE id=?", [e.qty, e.id_product]);
-                                            console.log(`Stok: ${i.name} Empty!`);
+                                            console.log(`Checkout: ${i.name} Success!`);
+                                            reslove('Checkout All Success');
                                         }
                                     });
                                 }
-                                reslove('Checkout!');
                             });
                         });
                     } else {
@@ -53,7 +54,8 @@ module.exports = {
                                 if (resultp.length > 0) {
                                     resultp.forEach((i) => {
                                         if (i.stok < 1 || i.stok < e.qty) {
-                                            console.log(`Stok: ${i.name} Empty!`);
+                                            console.log(`Lack of: ${i.name} Stock!`);
+                                            reslove(`${i.name} cannot be fulfilled!`);
                                         } else {
                                             const total = e.qty * i.price
                                             const date_pay = new Date();
@@ -67,11 +69,11 @@ module.exports = {
                                             conn.query("INSERT INTO payment SET ?", data);
                                             conn.query("DELETE FROM cart WHERE id=?", id_cart)
                                             conn.query("UPDATE product_name SET stok=stok - ? WHERE id=?", [e.qty, e.id_product]);
-                                            console.log(`Stok: ${i.name} Empty!`);
+                                            console.log(`Checkout: ${i.name} Success!`);
+                                            reslove(`Checkout ${i.name} Success`);
                                         }
                                     });
                                 }
-                                reslove('Checkout!');
                             });
                         });
                     } else {
