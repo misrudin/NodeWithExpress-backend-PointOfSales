@@ -8,10 +8,19 @@ import database `post` to phpmyamin
 $ nmp install
 $ node app.js
 ```
+#### Export database
+Export databse `database/post.sql` into mysql phpmyadmin.
+
 ### Run the method below using `postman`
 [Download Postman](https://www.postman.com/) - To test `GET` `POST` `PATCH` and `DELETE` method.
 #### Example method
-Login to get the valid Token.
+* ###### Register yuor acount Username and password:
+
+`GET` `http://localhost:4001/api/v1/auth/register`
+
+screeshoot
+
+* ###### Login to get the valid Token.
 
 Select method `POST` `http://localhost:4001/api/v1/auth/login`
 
