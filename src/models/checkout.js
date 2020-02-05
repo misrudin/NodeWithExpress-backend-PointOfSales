@@ -87,4 +87,12 @@ module.exports = {
     }
 
 
-}//end code
+};
+
+
+
+// my function
+
+const getCart = () => {
+
+}
