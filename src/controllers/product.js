@@ -93,6 +93,15 @@ module.exports = {
             .catch(err => console.log(err));
     },
 
+    sortUpdate: (req, res) => {
+        const date_update = req.params.dateUpdate;
+        productModel.sortUpdate(date_update)
+            .then((result) => {
+                miscHElper.response(res, result, 200)
+            })
+            .catch(err => console.log(err))
+    },
+
     addToCart: (req, res) => {
         const { id_user, id_product, qty } = req.body;
         const date_add = new Date();

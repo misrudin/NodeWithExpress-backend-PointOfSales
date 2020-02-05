@@ -4,7 +4,7 @@ const fs = require('fs');
 module.exports = {
     getProduct: () => {
         return new Promise((resolve, reject) => {
-            connection.query("SELECT * FROM product_name ORDER BY name,created_at ASC", (err, result) => {
+            connection.query("SELECT * FROM product_name order by created_at desc", (err, result) => {
                 if (!err) {
                     resolve(result);
                 } else {
@@ -112,18 +112,17 @@ module.exports = {
             })
         })
     },
-    // sortNewproduct: () => {
-    //     console.log('halo')
-    //     return new Promise((resolve, reject) => {
-    //         connection.query("SELECT category.nama_category, product_name.* FROM category INNER JOIN product_name ON category.id=product_name.id_category ORDER BY created_at DESC", (err, result) => {
-    //             if (!err) {
-    //                 resolve(result);
-    //             } else {
-    //                 reject(new Error(err));
-    //             }
-    //         });
-    //     });
-    // },
+    sortUpdate: (date_update) => {
+        return new Promise((resolve, reject) => {
+            connection.query("SELECT category.nama_category, product_name.* FROM category INNER JOIN product_name ON category.id=product_name.id_category WHERE product_name.update_at LIKE ?", '%' + date_update + '%', (err, result) => {
+                if (!err) {
+                    resolve(result);
+                } else {
+                    reject(new Error(err));
+                }
+            });
+        });
+    },
 
     addToCart: (data) => {
         return new Promise((resolve, reject) => {

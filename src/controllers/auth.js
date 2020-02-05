@@ -1,32 +1,41 @@
-// const modelLogin = require('../models/login');
 const jwt = require('jsonwebtoken');
 const conn = require('../configs/db');
 const authModels = require('../models/auth');
 const miscHelpers = require('../helpers/helpers');
+const bcrypt = require('bcryptjs');
 
 module.exports = {
     loginUser: (req, res) => {
         const username = req.body.username;
-        const password = req.body.password;
-        conn.query("SELECT * FROM `user` WHERE username=? AND password= ?", [username, password], (err, result) => {
+        conn.query("SELECT * FROM `user` WHERE username=?", username, (err, result) => {
             if (!err) {
                 if (result.length > 0) {
-                    const token = jwt.sign({ result }, process.env.PRIVATE_KEY, { expiresIn: 60 * 60 * 24 })
-                    res.json({
-                        token: token,
+                    const passwordInput = req.body.password;
+                    const passwordHash = result[0].password;
+                    const id_user = result[0].id
+                    bcrypt.compare(passwordInput, passwordHash, function (err, resPass) {
+                        if (resPass) {
+                            const token = jwt.sign({ id_user }, process.env.PRIVATE_KEY, { expiresIn: 60 * 60 * 24 })
+                            res.json({
+                                token: token,
+                            });
+                        } else {
+                            res.send('Password Wrong!')
+                        }
+                        // const data = {
+                        //     id_user: result[0].id,
+                        //     token: token
+                        // }
+                        // conn.query("INSERT INTO auth SET ?", data);
                     });
-                    // const data = {
-                    //     id_user: result[0].id,
-                    //     token: token
-                    // }
-                    // conn.query("INSERT INTO auth SET ?", data);
                 } else {
-                    res.send('Username or Password Wrong!');
+                    res.send('Username not found, please register!');
                 }
             } else {
                 console.log(err);
             }
-        });
+        })
+
     },
 
     // logout: (req, res) => {
@@ -38,22 +47,29 @@ module.exports = {
     register: (req, res) => {
         const username = req.body.username;
         const password = req.body.password;
-        const data = {
-            username: username,
-            password: password
-        }
-        conn.query("SELECT * FROM `user` WHERE username=?", username, (err, result) => {
-            if (!err) {
-                if (result.length > 0) {
-                    res.json('username already registered!');
-                } else {
-                    authModels.register(data)
-                        .then((result) => {
-                            miscHelpers.response(res, result, 200);
-                        })
-                        .catch(err => console.log(err));
+        bcrypt.genSalt(10, function (err, salt) {
+            bcrypt.hash(password, salt, function (err, hash) {
+                console.log(hash);
+                const data = {
+                    username: username,
+                    password: hash
                 }
-            }
+                conn.query("SELECT * FROM `user` WHERE username=?", username, (err, result) => {
+                    if (!err) {
+                        if (result.length > 0) {
+                            res.json('username already registered!');
+                        } else {
+                            authModels.register(data)
+                                .then((result) => {
+                                    miscHelpers.response(res, result, 200);
+                                })
+                                .catch(err => console.log(err));
+                        }
+                    }
+                });
+
+
+            });
         });
     }
 }
