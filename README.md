@@ -17,7 +17,7 @@ Select method `POST` `http://localhost:4001/api/v1/auth/login`
 
 Copy valid token and paste to Headers, don't forget to create key: my-token.
 
-screensoot
+![lgn](https://user-images.githubusercontent.com/37394664/73808615-228d2a80-4803-11ea-8d5f-245fd6ddae16.png)
 
 
 #### When I will get all data product, then i do:
@@ -29,7 +29,7 @@ http://localhost:4001/api/v1/product
 
 #### For other methods, you can follow the coding in the routers
 
-screenshoot
+![login](https://user-images.githubusercontent.com/37394664/73808522-c5917480-4802-11ea-8704-009f02a0cf86.png)
 
 * Auth
 * Category
