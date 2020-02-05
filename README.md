@@ -18,7 +18,7 @@ Export databse `database/post.sql` into mysql phpmyadmin.
 
 `GET` `http://localhost:4001/api/v1/auth/register`
 
-screeshoot
+![register](https://user-images.githubusercontent.com/37394664/73860911-e0013780-486e-11ea-9074-b942fa19bf4f.png)
 
 * ###### Login to get the valid Token.
 
