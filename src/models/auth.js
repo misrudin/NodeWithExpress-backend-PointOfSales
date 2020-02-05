@@ -11,5 +11,17 @@ module.exports = {
         }
       });
     });
+  },
+
+  getAll: () => {
+    return new Promise((resolve, reject) => {
+      conn.query("SELECT * FROM user", (err, result) => {
+        if (!err) {
+          resolve(result);
+        } else {
+          reject(new Error(err));
+        }
+      });
+    });
   }
 };//end code

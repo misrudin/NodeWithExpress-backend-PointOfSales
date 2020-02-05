@@ -1,6 +1,7 @@
 const productModel = require('../models/product');
 const miscHElper = require('../helpers/helpers');
 const jwt = require('jsonwebtoken');
+const conn = require('../configs/db')
 
 
 module.exports = {
@@ -77,11 +78,20 @@ module.exports = {
 
     pagination: (req, res) => {
         const nomor = req.params.nomor;
-        productModel.pagination(nomor)
-            .then((result) => {
-                res.json(result)
-            })
-            .catch(err => console.log(err));
+        conn.query("SELECT COUNT(*) as total FROM product_name", (err, result) => {
+            const total = result[0].total;//jumlah seluruh data
+
+            if (nomor > 0) {
+                productModel.pagination(nomor, total)
+                    .then((result) => {
+                        res.json(result);
+                    })
+                    .catch(err => console.log(err));
+            } else {
+                res.json(`Nothing Page ${nomor}`)
+            }
+
+        });
     },
 
     sortByCategory: (req, res) => {
@@ -120,8 +130,8 @@ module.exports = {
 
     addStok: (req, res) => {
         const id_product = req.params.id_product;
-        const stok = req.body.stok;
-        productModel.addStok(stok, id_product)
+        const stokAdd = req.body.stok;
+        productModel.addStok(stokAdd, id_product)
             .then((result) => {
                 res.json(result)
             })

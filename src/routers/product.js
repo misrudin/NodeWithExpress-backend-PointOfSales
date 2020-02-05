@@ -19,7 +19,8 @@ const upload = multer({
 const Router = express.Router();
 const productController = require('../controllers/product');
 const corsOptions = {
-    origin: 'http://localhost/api/v1',
+    origin: 'http://localhost:4001/api/v1',
+    optionsSuccessStatus: 200
 }
 
 
@@ -32,7 +33,7 @@ Router.patch('/:id_product', upload.single('image'), cors(corsOptions), auth.ver
 Router.delete('/:id_product', cors(corsOptions), auth.verify, productController.deleteProduct); //delete by id
 Router.get('/page/:nomor', cors(corsOptions), auth.verify, productController.pagination); //pagination
 Router.get('/category/:name_category', cors(corsOptions), auth.verify, productController.sortByCategory); //sort by category
-Router.post('/fillter', cors(corsOptions), auth.verify, productController.fillterProduct); //filter by name
+Router.post('/filter', cors(corsOptions), auth.verify, productController.fillterProduct); //filter by name
 
 Router.post('/addtocart', cors(corsOptions), auth.verify, productController.addToCart); //add to cart
 Router.patch('/addstok/:id_product', cors(corsOptions), auth.verify, productController.addStok); //add stok

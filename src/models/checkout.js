@@ -12,7 +12,7 @@ module.exports = {
                                     resultp.forEach((i) => {
                                         if (i.stok < 1 || i.stok < e.qty) {
                                             console.log(`Lack of: ${i.name} Stock!`);
-                                            reslove('Some products cannot be fulfilled!');
+                                            reslove(`Some item cannot be fulfilled!`);
                                         } else {
                                             const total = e.qty * i.price
                                             const date_pay = new Date();
@@ -39,12 +39,11 @@ module.exports = {
                 } else {
                     reject(new Error(err));
                 }
-            })
-        })
+            });
+        });
     },
 
     checkoutById: (id_cart, id_user) => {
-        const pesan = [];
         return new Promise((reslove, reject) => {
             conn.query("SELECT * FROM cart where id= ?", id_cart, (err, result) => {
                 if (!err) {
@@ -88,11 +87,3 @@ module.exports = {
 
 
 };
-
-
-
-// my function
-
-const getCart = () => {
-
-}

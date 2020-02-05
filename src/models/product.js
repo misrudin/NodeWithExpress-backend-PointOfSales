@@ -78,14 +78,11 @@ module.exports = {
         });
     },
 
-    pagination: (nomor) => {
+    pagination: (nomor, total) => {
 
         const dataPage = 2;// jumlah data per halaman
-        const countAllData = connection.query("SELECT COUNT(*) as total FROM product_name", (err, result) => {
-            return result[0].total;
-        }); //jumlah seluruh data
 
-        const page = countAllData / dataPage; // mengitung jumlah halaman
+        const totalPage = total / dataPage; // mengitung jumlah halaman
 
         const firstData = (dataPage * nomor) - dataPage; // menentukan awal data tiap halaman
 
@@ -93,7 +90,12 @@ module.exports = {
         return new Promise((resolve, reject) => {
             connection.query("SELECT * FROM product_name ORDER BY name ASC LIMIT ?, ?", [firstData, dataPage], (err, result) => {
                 if (!err) {
-                    resolve(result);
+                    const page = Math.ceil(totalPage);
+                    if (nomor > page) {
+                        resolve(`Nothing Page ${nomor}`)
+                    } else {
+                        resolve([`Total Page : ${page}`, `Curren Page: ${nomor}`, result]);
+                    }
                 } else {
                     reject(new Error(err));
                 }
@@ -151,10 +153,11 @@ module.exports = {
         });
     },
 
-    addStok: (stok, id_product) => {
+    addStok: (stokAdd, id_product) => {
+        console.log(stokAdd);
         const date_update = new Date()
         return new Promise((resolve, reject) => {
-            connection.query("UPDATE product_name SET stok = stok + ?,update_at=? WHERE id = ?", [stok, date_update, id_product], (err, result) => {
+            connection.query("UPDATE product_name SET stok = stok + ?,update_at=? WHERE id = ?", [stokAdd, date_update, id_product], (err, result) => {
                 if (!err) {
                     resolve(result);
                 } else {

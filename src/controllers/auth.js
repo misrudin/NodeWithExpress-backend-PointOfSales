@@ -67,9 +67,15 @@ module.exports = {
                         }
                     }
                 });
-
-
             });
         });
+    },
+
+    getAll: (req, res) => {
+        authModels.getAll()
+            .then((result) => {
+                miscHelpers.response(res, result, 200)
+            })
+            .catch(err => console.log(err))
     }
 }
