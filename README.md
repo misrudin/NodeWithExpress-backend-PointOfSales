@@ -2,14 +2,18 @@
 First Project-Task Week 1
 
 ## Running The Program
-make sure `xampp mysql` is active, 
-import database `post` to phpmyamin
+make sure `xampp mysql` is active.
+
+#### Import database
+Import databse `database/post.sql` into mysql phpmyadmin.
+
+#### Import database
+Open the code editor and terminal then write the following code in the terminal.
 ```
+$ cd `{folder name}`
 $ nmp install
 $ node app.js
 ```
-#### Export database
-Export databse `database/post.sql` into mysql phpmyadmin.
 
 ### Run the method below using `postman`
 [Download Postman](https://www.postman.com/) - To test `GET` `POST` `PATCH` and `DELETE` method.
