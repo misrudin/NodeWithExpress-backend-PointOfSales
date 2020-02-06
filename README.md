@@ -1,13 +1,13 @@
 # NodeWithExpress - Backend
 First Project-Task Week 1
 
-## Running The Program
+## preparation
 make sure `xampp mysql` is active.
 
 #### Import database
 Import databse `database/post.sql` into mysql phpmyadmin.
 
-#### Import database
+#### Running the program
 Open the code editor and terminal then write the following code in the terminal.
 ```
 $ cd `{folder name}`
