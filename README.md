@@ -11,7 +11,7 @@ Import databse `database/post.sql` into mysql phpmyadmin.
 Open the code editor and terminal then write the following code in the terminal.
 ```
 $ cd `{folder name}`
-$ nmp install
+$ npm install
 $ node app.js
 ```
 
