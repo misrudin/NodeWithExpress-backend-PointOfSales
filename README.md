@@ -1,7 +1,7 @@
 # NodeWithExpress - Backend
 First Project-Task Week 1
 
-## preparation
+## Preparation
 make sure `xampp mysql` is active.
 
 #### Import database
