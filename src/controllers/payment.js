@@ -3,7 +3,7 @@ const miscHelper = require('../helpers/helpers');
 
 module.exports = {
     allPayment: (req, res) => {
-        const id_user = req.params.id_user;
+        const id_user = process.env.SESSION;
         paymentModel.allPayment(id_user)
             .then((result) => {
                 miscHelper.response(res, result, 200)

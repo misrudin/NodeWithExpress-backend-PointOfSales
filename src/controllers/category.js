@@ -1,6 +1,5 @@
 const categoryModel = require('../models/category')
 const miscHElper = require('../helpers/helpers')
-const jwt = require('jsonwebtoken');
 
 module.exports = {
     getCategory: (req, res) => {

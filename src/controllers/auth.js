@@ -12,21 +12,18 @@ module.exports = {
                 if (result.length > 0) {
                     const passwordInput = req.body.password;
                     const passwordHash = result[0].password;
-                    const id_user = result[0].id
+                    const id_user = result[0].id;
+                    const role = result[0].role;
                     bcrypt.compare(passwordInput, passwordHash, function (err, resPass) {
                         if (resPass) {
-                            const token = jwt.sign({ id_user }, process.env.PRIVATE_KEY, { expiresIn: 60 * 60 * 24 })
+                            const token = jwt.sign({ id_user, role }, process.env.PRIVATE_KEY, { expiresIn: 60 * 60 * 24 })
                             res.json({
                                 token: token,
                             });
+                            process.env.TOKEN = token;
                         } else {
                             res.send('Password Wrong!')
                         }
-                        // const data = {
-                        //     id_user: result[0].id,
-                        //     token: token
-                        // }
-                        // conn.query("INSERT INTO auth SET ?", data);
                     });
                 } else {
                     res.send('Username not found, please register!');
@@ -38,21 +35,20 @@ module.exports = {
 
     },
 
-    // logout: (req, res) => {
-    //     id_user = req.params.id_user
-    //     conn.query("DELETE FROM auth WHERE id_user=?", id_user)
-    //     res.send('logout')
-    // },
+    logout: (req, res) => {
+        process.env.TOKEN = "";
+        process.env.SESSION = "";
+        res.send("Succes Logout!");
+    },
 
     register: (req, res) => {
-        const username = req.body.username;
-        const password = req.body.password;
+        const { username, password, role } = req.body;
         bcrypt.genSalt(10, function (err, salt) {
             bcrypt.hash(password, salt, function (err, hash) {
-                console.log(hash);
                 const data = {
                     username: username,
-                    password: hash
+                    password: hash,
+                    role: role
                 }
                 conn.query("SELECT * FROM `user` WHERE username=?", username, (err, result) => {
                     if (!err) {

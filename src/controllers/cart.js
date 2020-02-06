@@ -3,7 +3,7 @@ const miscHelper = require('../helpers/helpers');
 
 module.exports = {
     getAllCart: (req, res) => {
-        const id_user = req.params.id_user;
+        const id_user = process.env.SESSION;
         cartModel.getAllCart(id_user)
             .then((result) => {
                 miscHelper.response(res, result, 200);

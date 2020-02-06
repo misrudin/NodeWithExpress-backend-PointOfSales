@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 05, 2020 at 05:12 PM
+-- Generation Time: Feb 06, 2020 at 01:29 PM
 -- Server version: 10.1.37-MariaDB
 -- PHP Version: 7.3.1
 
@@ -25,18 +25,6 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `auth`
---
-
-CREATE TABLE `auth` (
-  `id` int(11) NOT NULL,
-  `id_user` int(11) NOT NULL,
-  `token` varchar(128) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `cart`
 --
 
@@ -47,6 +35,13 @@ CREATE TABLE `cart` (
   `qty` int(11) NOT NULL,
   `date_add` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `cart`
+--
+
+INSERT INTO `cart` (`id`, `id_user`, `id_product`, `qty`, `date_add`) VALUES
+(11, 10, 28, 6, '2020-02-06 08:06:27');
 
 -- --------------------------------------------------------
 
@@ -82,6 +77,14 @@ CREATE TABLE `payment` (
   `total` int(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `payment`
+--
+
+INSERT INTO `payment` (`id`, `date_pay`, `id_user`, `id_product`, `qty`, `total`) VALUES
+(13, '2020-02-06 07:55:03', 10, 30, 1, 5000),
+(14, '2020-02-06 07:55:03', 10, 29, 2, 8000);
+
 -- --------------------------------------------------------
 
 --
@@ -115,7 +118,7 @@ INSERT INTO `product_name` (`id`, `name`, `description`, `price`, `stok`, `image
 (26, 'Air Putih', 'Bening dan segar.', 2000, 30, 'http://localhost:4001/uploads/6157355-cofe.jpg', 2, '2020-02-04 17:00:00', '2020-02-04 17:00:00'),
 (27, 'Es Teh Manis', 'Teh tubruk.', 2500, 20, 'http://localhost:4001/uploads/6157355-cofe.jpg', 2, '2020-02-04 17:00:00', '2020-02-04 17:00:00'),
 (28, 'Bakwan', 'Reanyah dan gurih.', 1000, 0, 'http://localhost:4001/uploads/6157355-cofe.jpg', 1, '2020-02-04 17:00:00', '2020-02-04 17:00:00'),
-(29, 'kelapa', 'kelapa muda', 38, 9, 'http://localhost:4001/uploads/20200111_210245.jpg', 2, '2020-02-05 14:42:47', '2020-02-05 13:05:31');
+(29, 'Nasi Goreng', 'Sudah pasti digoreng.', 4000, 8, 'http://localhost:4001/uploads/6157355-cofe.jpg', 1, '2020-02-06 01:41:29', '2020-02-05 13:05:31');
 
 -- --------------------------------------------------------
 
@@ -126,26 +129,21 @@ INSERT INTO `product_name` (`id`, `name`, `description`, `price`, `stok`, `image
 CREATE TABLE `user` (
   `id` int(11) NOT NULL,
   `username` varchar(64) NOT NULL,
-  `password` varchar(128) NOT NULL
+  `password` varchar(128) NOT NULL,
+  `role` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `username`, `password`) VALUES
-(10, 'udin', '$2a$10$ufylJnA3gEqRel5mg6EshuxOSePA879EgdTEBXBjVSMDtBqqflb9W'),
-(11, 'kudin', '$2a$10$qKEgI08uHz6fZ3S.xO.FOuwmPbT1C24I/FBkT5pfGDjuX7bPNkKMe');
+INSERT INTO `user` (`id`, `username`, `password`, `role`) VALUES
+(10, 'udin', '$2a$10$ufylJnA3gEqRel5mg6EshuxOSePA879EgdTEBXBjVSMDtBqqflb9W', 1),
+(11, 'kudin', '$2a$10$qKEgI08uHz6fZ3S.xO.FOuwmPbT1C24I/FBkT5pfGDjuX7bPNkKMe', 2);
 
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `auth`
---
-ALTER TABLE `auth`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `cart`
@@ -182,16 +180,10 @@ ALTER TABLE `user`
 --
 
 --
--- AUTO_INCREMENT for table `auth`
---
-ALTER TABLE `auth`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -203,19 +195,19 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `product_name`
 --
 ALTER TABLE `product_name`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

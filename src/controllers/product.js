@@ -1,6 +1,5 @@
 const productModel = require('../models/product');
 const miscHElper = require('../helpers/helpers');
-const jwt = require('jsonwebtoken');
 const conn = require('../configs/db')
 
 
@@ -36,12 +35,11 @@ module.exports = {
             .then((result) => {
                 miscHElper.response(res, result, 200)
             })
-            .catch(err => console.log(err));
+            .catch(err => res.json(err));
     },
     updateProduct: (req, res) => {
         const id_product = req.params.id_product;
         const date_update = new Date()
-
         const { name, description, price, stok, id_category } = req.body;
         const data = {
             name,
@@ -52,11 +50,21 @@ module.exports = {
             id_category,
             update_at: date_update
         }
-        productModel.updateProduct(data, id_product)
-            .then((result) => {
-                res.json(result)
-            })
-            .catch(err => console.log(err));
+
+        conn.query("SELECT * FROM product_name where id =?", id_product, (err, result) => {
+            if (!err) {
+                if (result.length > 0) {
+                    process.env.URL = result[0].image;
+                    productModel.updateProduct(data, id_product)
+                        .then((result) => {
+                            res.json(result)
+                        })
+                        .catch(err => console.log(err));
+                } else {
+                    res.send('Eror!')
+                }
+            }
+        })
     },
     deleteProduct: (req, res) => {
         const id_product = req.params.id_product;
@@ -121,11 +129,15 @@ module.exports = {
             qty,
             date_add: date_add
         }
-        productModel.addToCart(data)
-            .then((result) => {
-                miscHElper.response(res, result, 200)
-            })
-            .catch(err => console.log(err));
+        if (data.qty < 1) {
+            res.send('Cannot reduce!')
+        } else {
+            productModel.addToCart(data)
+                .then((result) => {
+                    miscHElper.response(res, result, 200)
+                })
+                .catch(err => console.log(err));
+        }
     },
 
     addStok: (req, res) => {

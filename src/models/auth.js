@@ -15,7 +15,7 @@ module.exports = {
 
   getAll: () => {
     return new Promise((resolve, reject) => {
-      conn.query("SELECT * FROM user", (err, result) => {
+      conn.query("SELECT id,username,role FROM user", (err, result) => {
         if (!err) {
           resolve(result);
         } else {

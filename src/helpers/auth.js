@@ -2,16 +2,25 @@ const jwt = require('jsonwebtoken');
 
 module.exports = {
     verify: (req, res, next) => {
-        const token = req.headers['my-token'];
         try {
-            const decoded = jwt.verify(token, process.env.PRIVATE_KEY);
-            console.log(decoded)
+            const decoded = jwt.verify(process.env.TOKEN, process.env.PRIVATE_KEY);
+            process.env.SESSION = decoded.id_user;
+            process.env.ROLE = decoded.role;
             next();
         } catch (err) {
-            console.log(err)
             res.json({
-                msg: 'Token infalid!'
+                msg: 'Token infalid!',
+                method: 'Please Login!'
             });
+        }
+    },
+    cekrole: (req, res, next) => {
+        if (process.env.ROLE == 1) {
+            next();
+        } else {
+            res.json({
+                msg: 'You canot access!'
+            })
         }
     }
 }

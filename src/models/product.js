@@ -39,6 +39,13 @@ module.exports = {
     },
     updateProduct: (data, id_product) => {
         return new Promise((resolve, reject) => {
+            const img = process.env.URL.replace('http://localhost:4001/', '');
+            fs.unlink(img, (err) => {
+                if (err) {
+                    return;
+                }
+            });
+            process.env.URL = "";
             connection.query("UPDATE product_name SET ? WHERE id = ?", [data, id_product], (err, result) => {
                 if (!err) {
                     resolve(result);
