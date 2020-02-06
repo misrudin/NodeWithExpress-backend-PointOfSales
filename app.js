@@ -18,6 +18,6 @@ const router = require('./src/routers/index.js');
 app.use('/api/v1', router);
 
 app.listen(port, () => {
-    console.log(`\n App Listen Port ${port}`);
+    console.log(`\n Cors Enable App Listen Port ${port}`);
 
 });
