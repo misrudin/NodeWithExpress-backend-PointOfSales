@@ -25,7 +25,6 @@ const corsOptions = {
 
 
 
-
 Router.get('/', cors(corsOptions), productController.getProduct); //get all prod
 Router.get('/:id_product', cors(corsOptions), productController.productDetail); // get by id
 Router.post('/', upload.single('image'), cors(corsOptions), auth.verify, productController.insertProduct); //insert product + upload image
