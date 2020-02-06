@@ -20,7 +20,7 @@ $ node app.js
 #### Example method
 * ###### Register yuor acount Username and password:
 
-`GET` `http://localhost:4001/api/v1/auth/register`
+`POST` `http://localhost:4001/api/v1/auth/register`
 
 ![register](https://user-images.githubusercontent.com/37394664/73860911-e0013780-486e-11ea-9074-b942fa19bf4f.png)
 
