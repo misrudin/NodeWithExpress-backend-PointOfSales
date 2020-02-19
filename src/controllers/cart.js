@@ -3,25 +3,45 @@ const miscHelper = require('../helpers/helpers');
 
 module.exports = {
     getAllCart: (req, res) => {
-        const id_user = process.env.SESSION;
-        cartModel.getAllCart(id_user)
-            .then((result) => {
-                miscHelper.response(res, result, 200);
+        cartModel.getAllCart()
+            .then((result,qty) => {
+                miscHelper.responseCart(res, result,qty, 200);
             })
             .catch(err => console.log(err))
     },
     addQty: (req, res) => {
         const id_cart = req.params.id_cart;
-        const qty = req.body.qty;
+        const qty = 1;
         cartModel.addQty(qty, id_cart)
             .then((result) => {
                 miscHelper.response(res, result, 200);
             })
             .catch(err => console.log(err));
     },
+
+    addToCart: (req, res) => {
+        const { id_user, id_product, qty } = req.body;
+        const date_add = new Date();
+        const data = {
+            id_user,
+            id_product,
+            qty,
+            date_add: date_add
+        }
+        if (data.qty < 1) {
+            res.send('Cannot reduce!')
+        } else {
+            cartModel.addToCart(data)
+                .then((result) => {
+                    miscHelper.response(res, result, 200)
+                })
+                .catch(err => console.log(err));
+        }
+    },
+
     minQty: (req, res) => {
         const id_cart = req.params.id_cart;
-        const qty = req.body.qty;
+        const qty = 1;
         cartModel.minQty(qty, id_cart)
             .then((result) => {
                 miscHelper.response(res, result, 200);
@@ -30,14 +50,29 @@ module.exports = {
     },
 
     deleteCart: (req, res) => {
-        const id_cart = req.params.id_cart;
+        const id_cart = req.query.id_cart;
 
         cartModel.deleteCart(id_cart)
             .then((result) => {
                 miscHelper.response(res, result, 200);
             })
             .catch(err => console.log(err));
-    }
+    },
 
+    deleteAllCart: (req, res) => {
+        cartModel.deleteAllCart()
+            .then((result) => {
+                miscHelper.response(res, result, 200);
+            })
+            .catch(err => console.log(err));
+    },
+    
+    getQty: (req, res) => {
+            cartModel.getQty()
+                .then((result) => {
+                    miscHelper.response(res, result, 200);
+                })
+                .catch(err => console.log(err));
+        }
 
 }//end code

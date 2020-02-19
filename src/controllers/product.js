@@ -4,13 +4,48 @@ const conn = require('../configs/db')
 
 
 module.exports = {
-    getProduct: (req, res) => {
-        productModel.getProduct()
-            .then((result) => {
-                miscHElper.response(res, result, 200)
-            })
-            .catch(err => console.log(err));
+        getAllProduct:(req,res)=>{
+            productModel.getProduct()
+                    .then((result) => {
+                        miscHElper.response(res, result, 200)
+                        })
+                    .catch(err => console.log(err));
+        },
+        getProduct: (req, res) => {
+            const page = req.query.page;
+            const keyword = req.query.keyword;
+            const category = req.query.category;
+            // console.log(page,keyword,category)
+            if(!keyword){
+                conn.query("SELECT COUNT(*) as total FROM product_name", (err, result) => {
+                    const total = result[0].total;//jumlah seluruh data
+
+                    if (page > 0) {
+                        productModel.justPagination(page, total)
+                            .then((result) => {
+                                res.json(result);
+                            })
+                            .catch(err => console.log(err));
+                    }
+
+                });
+
+            }else if(keyword){
+                conn.query("SELECT COUNT(*) as total FROM product_name", (err, result) => {
+                    const total = result[0].total;//jumlah seluruh data
+
+                    if (page > 0) {
+                        productModel.filterPagination(page, total, keyword, category)
+                            .then((result) => {
+                                res.json(result);
+                            })
+                            .catch(err => console.log(err));
+                    }
+
+                });
+            }
     },
+
     productDetail: (req, res) => {
         const id_product = req.params.id_product;
         productModel.productDetail(id_product)
@@ -33,7 +68,17 @@ module.exports = {
         }
         productModel.insertProduct(data)
             .then((result) => {
-                miscHElper.response(res, result, 200)
+                const dataResult={
+                    id: result.insertId,
+                    name,
+                    description,
+                    price,
+                    stok,
+                    image: `http://localhost:4001/uploads/${req.file.filename}`,
+                    id_category,
+                    created_at: date_created
+                }
+                miscHElper.response(res, dataResult, 200)
             })
             .catch(err => res.json(err));
     },
@@ -41,17 +86,17 @@ module.exports = {
         const id_product = req.params.id_product;
         const date_update = new Date()
         const { name, description, price, stok, id_category } = req.body;
-        const data = {
-            name,
-            description, //kalu sama key dan valuenya gini
-            price,
-            stok,
-            image: `http://localhost:4001/uploads/${req.file.filename}`,
-            id_category,
-            update_at: date_update
-        }
-
-        conn.query("SELECT * FROM product_name where id =?", id_product, (err, result) => {
+        if(!req.file){
+            const data = {
+                name,
+                description, //kalu sama key dan valuenya gini
+                price,
+                stok,
+                // image: `http://localhost:4001/uploads/${req.file.filename}`,
+                id_category,
+                update_at: date_update
+            }
+            conn.query("SELECT * FROM product_name where id =?", id_product, (err, result) => {
             if (!err) {
                 if (result.length > 0) {
                     process.env.URL = result[0].image;
@@ -65,41 +110,57 @@ module.exports = {
                 }
             }
         })
+        }else{
+            const data = {
+                name,
+                description, //kalu sama key dan valuenya gini
+                price,
+                stok,
+                image: `http://localhost:4001/uploads/${req.file.filename}`,
+                id_category,
+                update_at: date_update
+            }
+            conn.query("SELECT * FROM product_name where id =?", id_product, (err, result) => {
+            if (!err) {
+                if (result.length > 0) {
+                    process.env.URL = result[0].image;
+                    productModel.updateProduct(data, id_product)
+                        .then((result) => {
+                            res.json(result)
+                             const img = process.env.URL.replace('http://localhost:4001/', '');
+                                fs.unlink(img, (err) => {
+                                    if (err) {
+                                        return;
+                                    }
+                                });
+                                process.env.URL = "";
+                        })
+                        .catch(err => console.log(err));
+                } else {
+                    res.send('Eror!')
+                }
+            }
+        })
+        }
     },
+
     deleteProduct: (req, res) => {
         const id_product = req.params.id_product;
         productModel.deleteProduct(id_product)
             .then((result) => {
-                res.json(result)
+                const dataResult=id_product
+                miscHElper.response(res, dataResult, 200)
             })
             .catch(err => console.log(err));
     },
 
     fillterProduct: (req, res) => {
-        const keyword = req.body.keyword;
+        const keyword = req.query.keyword;
         productModel.fillterProduct(keyword)
             .then((result) => {
                 miscHElper.response(res, result, 200)
             })
             .catch(err => console.log(err));
-    },
-
-    pagination: (req, res) => {
-        const nomor = req.params.nomor;
-        conn.query("SELECT COUNT(*) as total FROM product_name", (err, result) => {
-            const total = result[0].total;//jumlah seluruh data
-
-            if (nomor > 0) {
-                productModel.pagination(nomor, total)
-                    .then((result) => {
-                        res.json(result);
-                    })
-                    .catch(err => console.log(err));
-            } else {
-                res.json(`Nothing Page ${nomor}`)
-            }
-
-        });
     },
 
     sortByCategory: (req, res) => {
@@ -118,26 +179,6 @@ module.exports = {
                 miscHElper.response(res, result, 200)
             })
             .catch(err => console.log(err))
-    },
-
-    addToCart: (req, res) => {
-        const { id_user, id_product, qty } = req.body;
-        const date_add = new Date();
-        const data = {
-            id_user,
-            id_product,
-            qty,
-            date_add: date_add
-        }
-        if (data.qty < 1) {
-            res.send('Cannot reduce!')
-        } else {
-            productModel.addToCart(data)
-                .then((result) => {
-                    miscHElper.response(res, result, 200)
-                })
-                .catch(err => console.log(err));
-        }
     },
 
     addStok: (req, res) => {

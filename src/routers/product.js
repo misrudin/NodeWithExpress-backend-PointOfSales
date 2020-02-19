@@ -16,37 +16,58 @@ const storage = multer.diskStorage({
     }
 })
 
+
 const upload = multer({ //multer settings
     storage: storage,
-    fileFilter: function (req, file, callback) {
-        const ext = path.extname(file.originalname);
-        if (ext !== '.png' && ext !== '.jpg' && ext !== '.gif' && ext !== '.jpeg') {
-            return callback(new Error('Only images are allowed'))
+    fileFilter: function (req, file, next) {
+        if(!file){
+            next()
         }
-        callback(null, true)
+        const image= file.mimetype.startsWith('image/');
+        if(image){
+            next(null,true)
+        }else{
+            next({message: "Only image Allowed!"})
+        }
     },
     limits: {
         fileSize: 1024 * 1024
     }
 }).single('image');
 
-const corsOptions = {
-    origin: 'http://localhost:4001/api/v1',
-    optionsSuccessStatus: 200
-};
 
-Router.get('/', cors(corsOptions), productController.getProduct); //get all prod
-Router.get('/:id_product', cors(corsOptions), productController.productDetail); // get by id
-Router.post('/', cors(corsOptions), auth.verify, auth.cekrole, upload, productController.insertProduct); //insert product + upload image
-Router.patch('/:id_product', cors(corsOptions), auth.verify, auth.cekrole, upload, productController.updateProduct); // update product + image
-Router.delete('/:id_product', auth.cekrole, cors(corsOptions), auth.verify, auth.cekrole, productController.deleteProduct); //delete by id
-Router.get('/page/:nomor', cors(corsOptions), productController.pagination); //pagination
-Router.get('/category/:name_category', cors(corsOptions), productController.sortByCategory); //sort by category
-Router.post('/filter', cors(corsOptions), productController.fillterProduct); //filter by name
+Router.get('/',auth.verify, productController.getProduct); //get all prod by page and filter
+Router.get('/all',auth.verify, productController.getAllProduct); //get all prod by page and filter
+Router.get('/:id_product',auth.verify, productController.productDetail); // get by id
 
-Router.post('/addtocart', cors(corsOptions), auth.verify, productController.addToCart); //add to cart
-Router.patch('/addstok/:id_product', auth.cekrole, cors(corsOptions), auth.verify, auth.cekrole, productController.addStok); //add stok
+Router.post('/',auth.verify,(req,res,next)=>{
+    upload(req,res,(err)=>{
+        if(err){
+            res.send(err)
+        }else{
+            next();
+        }
+    })
+} , productController.insertProduct); //insert product + upload image
+
+Router.patch('/:id_product', auth.verify,(req,res,next)=>{
+    upload(req,res,(err)=>{
+        if(err){
+            res.send(err)
+        }else{
+            next()
+        }
+    })
+}  , productController.updateProduct); // update product + image
+
+Router.delete('/:id_product', auth.verify,  productController.deleteProduct); //delete by id
+// Router.get('/', auth.verify, productController.pagination); //pagination
+Router.get('/category/:name_category', productController.sortByCategory); //sort by category
+Router.post('/filter', productController.fillterProduct); //filter by name
+
+Router.patch('/addstok/:id_product',  auth.verify,  productController.addStok); //add stok
 
 Router.get('/update/:dateUpdate', productController.sortUpdate) //sort by date update
+
 
 module.exports = Router; 

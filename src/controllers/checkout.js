@@ -3,8 +3,14 @@ const miscHelper = require('../helpers/helpers');
 
 module.exports = {
     checkoutAll: (req, res) => {
-        const id_user = process.env.SESSION;
-        checkoutModel.checkoutAll(id_user)
+        const {id_user,faktur,qty,total} = req.body
+        const data ={
+            faktur,
+            id_user,
+            qty,
+            total
+        }
+        checkoutModel.checkoutAll(data)
             .then((result) => {
                 miscHelper.response(res, result, 200)
             })
@@ -13,7 +19,7 @@ module.exports = {
 
     checkoutById: (req, res) => {
         const id_cart = req.params.id_cart;
-        const id_user = process.env.SESSION;
+        const id_user = req.params.id_user;
         checkoutModel.checkoutById(id_cart, id_user)
             .then((result) => {
                 miscHelper.response(res, result, 200)

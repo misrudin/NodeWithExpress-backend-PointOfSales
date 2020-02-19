@@ -3,12 +3,20 @@ const miscHelper = require('../helpers/helpers');
 
 module.exports = {
     allPayment: (req, res) => {
-        const id_user = process.env.SESSION;
-        paymentModel.allPayment(id_user)
+        const faktur = req.query.faktur;
+        if(!faktur){
+        paymentModel.allPayment()
             .then((result) => {
                 miscHelper.response(res, result, 200)
             })
             .catch(err => console.log(err))
+        }else{
+            paymentModel.detailPay(faktur)
+            .then((result) => {
+                miscHelper.response(res, result, 200)
+            })
+            .catch(err => console.log(err))
+        }
     },
     deletePayment: (req, res) => {
         const id_payment = req.params.id_payment;
@@ -17,5 +25,22 @@ module.exports = {
                 miscHelper.response(res, result, 200)
             })
             .catch(err => console.log(err))
+    },
+    incomeToday: (req, res) => {
+        paymentModel.incomeToday()
+            .then((result) => {
+                miscHelper.response(res, result, 200)
+            })
+            .catch(err => console.log(err))
+    },
+
+    detailPayment: (req, res)=>{
+
+        const faktur = req.params.faktur
+        paymentModel.detailPayment(faktur)
+        .then((result) =>{
+            miscHelper.response(res, result, 200)
+        })
+        .catch(err=> console.log(err))
     }
 }

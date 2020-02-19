@@ -1,11 +1,13 @@
 const conn = require("../configs/db");
 
 module.exports = {
-    getAllCart: (id_user) => {
+    getAllCart: () => {
         return new Promise((resolve, reject) => {
-            conn.query("SELECT user.username,cart.*, product_name.name,product_name.image,product_name.price FROM cart INNER JOIN product_name ON product_name.id=cart.id_product INNER JOIN user ON user.id=cart.id_user WHERE cart.id_user=? ORDER BY date_add DESC", id_user, (err, result) => {
+            conn.query("SELECT cart.*, product_name.name,product_name.image,product_name.price FROM cart INNER JOIN product_name ON product_name.id=cart.id_product", (err, result) => {
                 if (!err) {
-                    resolve(result);
+                    conn.query("SELECT SUM(qty) as getQty FROM cart", (err, qty) => {
+                    resolve(result,qty);
+                })
                 } else {
                     reject(new Error(err));
                 }
@@ -14,16 +16,46 @@ module.exports = {
         });
     },
 
+    addToCart: (data) => {
+        return new Promise((resolve, reject) => {
+
+            conn.query("SELECT * FROM cart WHERE id_product=?", data.id_product, (err, result) => {
+                if (!err) {
+                    if (result.length > 0) {
+                            resolve(result)
+                        }else{
+                        conn.query("INSERT INTO cart SET ?", data, (err, result) => {
+                            if (!err) {
+                                resolve(result);
+                            } else {
+                                reject(new Error(err));
+                            }
+                        });
+                    }
+                }
+            });
+        });
+    },
+
     addQty: (qty, id_cart) => {
         return new Promise((resolve, reject) => {
-            conn.query("UPDATE cart SET qty=qty + ? WHERE id = ?", [qty, id_cart], (err, result) => {
-                if (!err) {
-                    resolve(result);
-                } else {
-                    reject(new Error(err));
+            conn.query("SELECT qty,id_product FROM cart WHERE id =?",id_cart,(err,cart)=>{
+                if(cart.length>0){
+                    conn.query("SELECT stok FROM product_name WHERE id=?",cart[0].id_product,(err,product)=>{
+                        if(product.length>0){
+                            if(product[0].stok>cart[0].qty){
+                                            conn.query("UPDATE cart SET qty=qty + ? WHERE id = ?", [qty, id_cart], (err, result) => {
+                                                if (!err) {
+                                                    resolve(result);
+                                                } else {
+                                                    reject(new Error(err));
+                                                }
+                                            });
+                            }
+                        }
+                    })
                 }
-            }
-            );
+            })
         });
     },
 
@@ -42,6 +74,30 @@ module.exports = {
     deleteCart: id_cart => {
         return new Promise((resolve, reject) => {
             conn.query("DELETE FROM cart WHERE id= ?", id_cart, (err, result) => {
+                if (!err) {
+                    resolve(result);
+                } else {
+                    reject(new Error(err));
+                }
+            });
+        });
+    },
+
+    deleteAllCart: () => {
+        return new Promise((resolve, reject) => {
+            conn.query("DELETE FROM cart", (err, result) => {
+                if (!err) {
+                    resolve(result);
+                } else {
+                    reject(new Error(err));
+                }
+            })
+        })
+    },
+
+    getQty: () => { 
+        return new Promise((resolve, reject) => {
+            conn.query("SELECT SUM(qty) as getQty FROM cart", (err, result) => {
                 if (!err) {
                     resolve(result);
                 } else {

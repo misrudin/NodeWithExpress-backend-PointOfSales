@@ -16,17 +16,16 @@ module.exports = {
                     const role = result[0].role;
                     bcrypt.compare(passwordInput, passwordHash, function (err, resPass) {
                         if (resPass) {
-                            const token = jwt.sign({ id_user, role }, process.env.PRIVATE_KEY, { expiresIn: 60 * 60 * 24 })
+                            const token = jwt.sign({ id_user, username, role }, process.env.PRIVATE_KEY)
                             res.json({
                                 token: token,
                             });
-                            process.env.TOKEN = token;
                         } else {
-                            res.send('Password Wrong!')
+                            res.json({msg:'Password Wrong!'})
                         }
                     });
                 } else {
-                    res.send('Username not found, please register!');
+                    res.json({msg:'Username not found, please register!'});
                 }
             } else {
                 console.log(err);
@@ -53,7 +52,7 @@ module.exports = {
                 conn.query("SELECT * FROM `user` WHERE username=?", username, (err, result) => {
                     if (!err) {
                         if (result.length > 0) {
-                            res.json('username already registered!');
+                            res.json({msg:'username already registered!'});
                         } else {
                             authModels.register(data)
                                 .then((result) => {
