@@ -3,7 +3,7 @@ const conn = require('../configs/db');
 module.exports = {
     allPayment: () => {
         return new Promise((resolve, reject) => {
-            conn.query("SELECT payment.faktur,payment.total,user.username, date_format(payment.date_pay, '%d %M %Y') as date_pay from payment JOIN user on user.id=payment.id_user ORDER BY `date_pay` DESC", (err, result) => {
+            conn.query("SELECT payment.faktur,payment.total,payment.qty,user.username, date_format(payment.date_pay, '%d %M %Y') as date_pay from payment JOIN user on user.id=payment.id_user ORDER BY `date_pay` DESC", (err, result) => {
                 if (!err) {
                     resolve(result);
                 } else {
