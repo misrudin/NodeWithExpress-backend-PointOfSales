@@ -11,6 +11,7 @@ module.exports = {
                         })
                     .catch(err => console.log(err));
         },
+
         getProduct: (req, res) => {
             const page = req.query.page;
             const keyword = req.query.keyword;
@@ -54,6 +55,7 @@ module.exports = {
             .catch(err => console.log(err));
     },
     insertProduct: (req, res) => {
+        const { name, description, price, stok, id_category } = req.body;
 
         const date_created = new Date();
         const data = {
