@@ -15,7 +15,6 @@ module.exports = {
             const page = req.query.page;
             const keyword = req.query.keyword;
             const category = req.query.category;
-            // console.log(page,keyword,category)
             if(!keyword){
                 conn.query("SELECT COUNT(*) as total FROM product_name", (err, result) => {
                     const total = result[0].total;//jumlah seluruh data
@@ -62,7 +61,7 @@ module.exports = {
             description,
             price,
             stok,
-            image: process.env.URL_IMG+`${req.file.filename}`,
+            image: process.env.URL_IMG + `${req.file.filename}`,
             id_category,
             created_at: date_created
         }
@@ -74,7 +73,7 @@ module.exports = {
                     description,
                     price,
                     stok,
-                    image: process.env.URL_IMG+`${req.file.filename}`,
+                    image: process.env.URL_IMG + `${req.file.filename}`,
                     id_category,
                     created_at: date_created
                 }
@@ -116,7 +115,7 @@ module.exports = {
                 description, //kalu sama key dan valuenya gini
                 price,
                 stok,
-                image: process.env.URL_IMG+`${req.file.filename}`,
+                image: process.env.URL_IMG + `${req.file.filename}`,
                 id_category,
                 update_at: date_update
             }
