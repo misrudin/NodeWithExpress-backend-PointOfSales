@@ -55,14 +55,14 @@ module.exports = {
             .catch(err => console.log(err));
     },
     insertProduct: (req, res) => {
-        const { name, description, price, stok, id_category } = req.body;
+
         const date_created = new Date();
         const data = {
             name,
             description,
             price,
             stok,
-            image: `http://localhost:4001/uploads/${req.file.filename}`,
+            image: process.env.URL_IMG+`${req.file.filename}`,
             id_category,
             created_at: date_created
         }
@@ -74,7 +74,7 @@ module.exports = {
                     description,
                     price,
                     stok,
-                    image: `http://localhost:4001/uploads/${req.file.filename}`,
+                    image: process.env.URL_IMG+`${req.file.filename}`,
                     id_category,
                     created_at: date_created
                 }
@@ -116,7 +116,7 @@ module.exports = {
                 description, //kalu sama key dan valuenya gini
                 price,
                 stok,
-                image: `http://localhost:4001/uploads/${req.file.filename}`,
+                image: process.env.URL_IMG+`${req.file.filename}`,
                 id_category,
                 update_at: date_update
             }
@@ -127,7 +127,7 @@ module.exports = {
                     productModel.updateProduct(data, id_product)
                         .then((result) => {
                             res.json(result)
-                             const img = process.env.URL.replace('http://localhost:4001/', '');
+                             const img = process.env.URL.replace(process.env.URL_IMG, '');
                                 fs.unlink(img, (err) => {
                                     if (err) {
                                         return;
