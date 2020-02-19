@@ -1,6 +1,6 @@
 require('dotenv').config();
 const express = require('express');
-const cors = require('cors');
+// const cors = require('cors');
 const bodyParser = require('body-parser');
 const app = express();
 const port = process.env.SERVER_PORT;
@@ -9,7 +9,7 @@ app.use('/uploads', express.static("./uploads"));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cors());
+// app.use(cors());
 
 
 const router = require('./src/routers/index.js');
