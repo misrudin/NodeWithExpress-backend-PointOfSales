@@ -30,7 +30,9 @@ module.exports = {
         return new Promise((resolve, reject) => {
             connection.query("INSERT INTO product_name SET ?", data, (err, result) => {
                 if (!err) {
+                    connection.query('SELECT*FROM product_name',(err,result)=>{
                     resolve(result);
+                    })
                 } else {
                     reject(new Error(err));
                 }
@@ -41,7 +43,9 @@ module.exports = {
         return new Promise((resolve, reject) => {
             connection.query("UPDATE product_name SET ? WHERE id = ?", [data, id_product], (err, result) => {
                 if (!err) {
+                    connection.query('SELECT*FROM product_name',(err,result)=>{
                     resolve(result);
+                    })
                 } else {
                     reject(new Error(err));
                 }
@@ -58,7 +62,9 @@ module.exports = {
             });
             connection.query("DELETE FROM product_name WHERE id = ?", id_product, (err, result) => {
                 if (!err) {
+                    connection.query('SELECT*FROM product_name',(err,result)=>{
                     resolve(result);
+                    })
                 } else {
                     reject(new Error(err));
                 }

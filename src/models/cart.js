@@ -79,7 +79,9 @@ module.exports = {
         return new Promise((resolve, reject) => {
             conn.query("DELETE FROM cart WHERE id= ?", id_cart, (err, result) => {
                 if (!err) {
+                    conn.query('SELECT*FROM cart',(err,result)=>{
                     resolve(result);
+                    })
                 } else {
                     reject(new Error(err));
                 }
@@ -91,7 +93,9 @@ module.exports = {
         return new Promise((resolve, reject) => {
             conn.query("DELETE FROM cart", (err, result) => {
                 if (!err) {
+                    conn.query('SELECT*FROM cart',(err,result)=>{
                     resolve(result);
+                    })
                 } else {
                     reject(new Error(err));
                 }

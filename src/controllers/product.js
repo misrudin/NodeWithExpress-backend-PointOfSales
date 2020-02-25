@@ -69,17 +69,7 @@ module.exports = {
         }
         productModel.insertProduct(data)
             .then((result) => {
-                const dataResult={
-                    id: result.insertId,
-                    name,
-                    description,
-                    price,
-                    stok,
-                    image: process.env.URL_IMG + `${req.file.filename}`,
-                    id_category,
-                    created_at: date_created
-                }
-                miscHElper.response(res, dataResult, 200)
+                miscHElper.response(res, result, 200)
             })
             .catch(err => res.json(err));
     },
