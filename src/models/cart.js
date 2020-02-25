@@ -22,7 +22,9 @@ module.exports = {
             conn.query("SELECT * FROM cart WHERE id_product=?", data.id_product, (err, result) => {
                 if (!err) {
                     if (result.length > 0) {
-                            resolve(result)
+                            conn.query("select * from cart", (err, result)=>{
+                                resolve(result);
+                                })
                         }else{
                         conn.query("INSERT INTO cart SET ?", data, (err, result) => {
                             if (!err) {
