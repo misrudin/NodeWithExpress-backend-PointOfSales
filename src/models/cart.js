@@ -26,7 +26,9 @@ module.exports = {
                         }else{
                         conn.query("INSERT INTO cart SET ?", data, (err, result) => {
                             if (!err) {
+                                conn.query("select * from cart", (err, result)=>{
                                 resolve(result);
+                                })
                             } else {
                                 reject(new Error(err));
                             }
