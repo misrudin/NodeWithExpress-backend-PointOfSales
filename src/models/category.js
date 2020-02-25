@@ -17,7 +17,9 @@ module.exports = {
         return new Promise((resolve, reject) => {
             connection.query("INSERT INTO category SET ?", data, (err, result) => {
                 if (!err) {
+                    connection.query('SELECT*FROM category',(err,result)=>{
                     resolve(result);
+                    })
                 } else {
                     reject(new Error(err));
                 }
@@ -30,7 +32,9 @@ module.exports = {
             connection.query(
                 "UPDATE category SET ? WHERE id=?",[data, id_category],(err, result) => {
                     if (!err) {
-                        resolve(result);
+                        connection.query('SELECT*FROM category',(err,result)=>{
+                    resolve(result);
+                    })
                     } else {
                         reject(new Error(err));
                     }
@@ -44,7 +48,9 @@ module.exports = {
             connection.query(
                 "DELETE FROM category WHERE id=?",id_category,(err, result) => {
                     if (!err) {
-                        resolve(result);
+                        connection.query('SELECT*FROM category',(err,result)=>{
+                    resolve(result);
+                    })
                     } else {
                         reject(new Error(err));
                     }
