@@ -30,9 +30,9 @@ const upload = multer({ //multer settings
             next({message: "Only image Allowed!"})
         }
     },
-    limits: {
-        fileSize: 1024 * 1024
-    }
+    // limits: {
+    //     fileSize: 1024 * 1024
+    // }
 }).single('image');
 
 
