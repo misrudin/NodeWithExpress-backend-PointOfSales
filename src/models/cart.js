@@ -79,7 +79,7 @@ module.exports = {
         return new Promise((resolve, reject) => {
             conn.query("DELETE FROM cart WHERE id= ?", id_cart, (err, result) => {
                 if (!err) {
-                    conn.query('SELECT*FROM cart',(err,result)=>{
+                    conn.query('SELECT cart.*, product_name.name,product_name.image,product_name.price FROM cart INNER JOIN product_name ON product_name.id=cart.id_product',(err,result)=>{
                     resolve(result);
                     })
                 } else {
