@@ -77,7 +77,7 @@ module.exports = {
     getUserByID:(req,res)=>{
         const id=req.params.id
         conn.query("Select username from user WHERE id=?",id,(err,result)=>{
-            res.json({username: result})
+            res.json(result)
         })
     }
 }
