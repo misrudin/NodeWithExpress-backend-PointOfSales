@@ -73,5 +73,11 @@ module.exports = {
                 miscHelpers.response(res, result, 200)
             })
             .catch(err => console.log(err))
+    },
+    getUserByID:(req,res)=>{
+        const id=req.params.id
+        conn.query("Select username from user WHERE id=?",id,(err,result)=>{
+            res.json({username: result})
+        })
     }
 }

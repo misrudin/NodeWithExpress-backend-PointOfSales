@@ -8,5 +8,6 @@ router.post("/login", controlerAuth.loginUser); // router user
 router.delete('/logout', controlerAuth.logout) // logout
 router.post("/register", controlerAuth.register);
 router.get("/user", auth.verify, controlerAuth.getAll)
+router.get("/user/:id", auth.verify, controlerAuth.getUserByID)
 
 module.exports = router;
