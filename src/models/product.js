@@ -86,7 +86,7 @@ module.exports = {
 
     filterPagination: (nomor, total,keyword,category) => {
 
-        const dataPage = 12;// jumlah data per halaman
+        const dataPage = 10;// jumlah data per halaman
 
         const totalPage = total / dataPage; // mengitung jumlah halaman
 
@@ -109,7 +109,7 @@ module.exports = {
 
     justPagination: (nomor, total) => {
 
-        const dataPage = 12;// jumlah data per halaman
+        const dataPage = 10;// jumlah data per halaman
 
         const totalPage = total / dataPage; // mengitung jumlah halaman
 
