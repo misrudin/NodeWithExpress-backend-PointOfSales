@@ -132,7 +132,7 @@ module.exports = {
 
     sortByCategory: (id) => {
         return new Promise((resolve, reject) => {
-            connection.query("SELECT category.nama_category, product_name.* FROM category INNER JOIN product_name ON category.id=product_name.id_category WHERE product_name.id_category LIKE ?", '%' + id + '%', (err, result) => {
+            connection.query("SELECT * FROM product_name WHERE id_category LIKE ?", '%' + id + '%', (err, result) => {
                 if (!err) {
                     resolve(result);
                 } else {
