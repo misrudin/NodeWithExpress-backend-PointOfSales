@@ -155,8 +155,8 @@ module.exports = {
     },
 
     sortByCategory: (req, res) => {
-        const name_category = req.params.name_category;
-        productModel.sortByCategory(name_category)
+        const id = req.query.id;
+        productModel.sortByCategory(id)
             .then((result) => {
                 miscHElper.response(res, result, 200)
             })

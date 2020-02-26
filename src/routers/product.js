@@ -62,7 +62,8 @@ Router.patch('/:id_product', auth.verify,(req,res,next)=>{
 
 Router.delete('/:id_product', auth.verify,  productController.deleteProduct); //delete by id
 // Router.get('/', auth.verify, productController.pagination); //pagination
-Router.get('/category/:name_category', productController.sortByCategory); //sort by category
+Router.get('/category', productController.sortByCategory); //sort by category
+
 Router.post('/filter', productController.fillterProduct); //filter by name
 
 Router.patch('/addstok/:id_product',  auth.verify,  productController.addStok); //add stok

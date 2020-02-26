@@ -130,9 +130,9 @@ module.exports = {
         })
     },
 
-    sortByCategory: (name_category) => {
+    sortByCategory: (id) => {
         return new Promise((resolve, reject) => {
-            connection.query("SELECT category.nama_category, product_name.* FROM category INNER JOIN product_name ON category.id=product_name.id_category WHERE category.nama_category LIKE ?", '%' + name_category + '%', (err, result) => {
+            connection.query("SELECT category.nama_category, product_name.* FROM category INNER JOIN product_name ON category.id=product_name.id_category WHERE product_name.id_category LIKE ?", '%' + id + '%', (err, result) => {
                 if (!err) {
                     resolve(result);
                 } else {
