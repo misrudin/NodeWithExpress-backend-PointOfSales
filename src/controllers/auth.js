@@ -19,6 +19,7 @@ module.exports = {
                             const token = jwt.sign({ id_user, username, role }, process.env.PRIVATE_KEY)
                             res.json({
                                 token: token,
+                                id: id_user
                             });
                         } else {
                             res.json({msg:'Password Wrong!'})
