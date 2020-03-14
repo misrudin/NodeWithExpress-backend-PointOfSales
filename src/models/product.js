@@ -117,7 +117,7 @@ module.exports = {
 
 
         return new Promise((resolve, reject) => {
-            connection.query("SELECT * FROM product_name where qty > 0 ORDER BY name ASC LIMIT ?, ?", [firstData, dataPage], (err, result) => {
+            connection.query("SELECT * FROM product_name ORDER BY name ASC LIMIT ?, ?", [firstData, dataPage], (err, result) => {
                 if (!err) {
                     const page = Math.ceil(totalPage);
                     if (nomor <= page) {
