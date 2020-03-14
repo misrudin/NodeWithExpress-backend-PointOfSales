@@ -86,7 +86,7 @@ module.exports = {
 
     filterPagination: (nomor, total,keyword,category) => {
 
-        const dataPage = 10;// jumlah data per halaman
+        const dataPage = 12;// jumlah data per halaman
 
         const totalPage = total / dataPage; // mengitung jumlah halaman
 
@@ -109,7 +109,7 @@ module.exports = {
 
     justPagination: (nomor, total) => {
 
-        const dataPage = 10;// jumlah data per halaman
+        const dataPage = 12;// jumlah data per halaman
 
         const totalPage = total / dataPage; // mengitung jumlah halaman
 
@@ -117,13 +117,13 @@ module.exports = {
 
 
         return new Promise((resolve, reject) => {
-            connection.query("SELECT * FROM product_name ORDER BY name ASC LIMIT ?, ?", [firstData, dataPage], (err, result) => {
+            connection.query("SELECT * FROM product_name where qty > 0 ORDER BY name ASC LIMIT ?, ?", [firstData, dataPage], (err, result) => {
                 if (!err) {
                     const page = Math.ceil(totalPage);
                     if (nomor <= page) {
                         resolve([page, `Curren Page: ${nomor}`, result]);
                     }
-                } else {
+                } else {''
                     reject(new Error(err));
                 }
             })
