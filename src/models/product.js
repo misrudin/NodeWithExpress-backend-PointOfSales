@@ -94,7 +94,7 @@ module.exports = {
 
 
         return new Promise((resolve, reject) => {
-            connection.query("SELECT * FROM product_name WHERE id_category LIKE ? AND name LIKE ? ORDER BY name ASC LIMIT ?, ?", ['%' + category + '%','%' + keyword + '%',firstData, dataPage], (err, result) => {
+            connection.query("SELECT * FROM product_name WHERE stok != 0 id_category LIKE ? AND name LIKE ? ORDER BY name ASC LIMIT ?, ?", ['%' + category + '%','%' + keyword + '%',firstData, dataPage], (err, result) => {
                 if (!err) {
                     const page = Math.ceil(totalPage);
                     if (nomor <= page) {
