@@ -12,7 +12,8 @@ module.exports = {
         }
         checkoutModel.checkoutAll(data)
             .then((result) => {
-                miscHelper.response(res, result, 200)
+                const dataResponse = { id: result.insertId, ...data }
+                miscHElper.response(res, dataResponse, 200)
             })
             .catch(err => console.log(err))
     },

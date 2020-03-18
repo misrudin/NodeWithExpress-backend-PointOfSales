@@ -30,9 +30,9 @@ module.exports = {
         return new Promise((resolve, reject) => {
             connection.query("INSERT INTO product_name SET ?", data, (err, result) => {
                 if (!err) {
-                    connection.query('SELECT*FROM product_name',(err,result)=>{
+                    
                     resolve(result);
-                    })
+                 
                 } else {
                     reject(new Error(err));
                 }
@@ -43,9 +43,7 @@ module.exports = {
         return new Promise((resolve, reject) => {
             connection.query("UPDATE product_name SET ? WHERE id = ?", [data, id_product], (err, result) => {
                 if (!err) {
-                    connection.query('SELECT*FROM product_name',(err,result)=>{
                     resolve(result);
-                    })
                 } else {
                     reject(new Error(err));
                 }
@@ -62,9 +60,7 @@ module.exports = {
             });
             connection.query("DELETE FROM product_name WHERE id = ?", id_product, (err, result) => {
                 if (!err) {
-                    connection.query('SELECT*FROM product_name',(err,result)=>{
                     resolve(result);
-                    })
                 } else {
                     reject(new Error(err));
                 }
@@ -84,29 +80,6 @@ module.exports = {
         });
     },
 
-    filterPagination: (nomor, total,keyword,category) => {
-
-        const dataPage = 12;// jumlah data per halaman
-
-        const totalPage = total / dataPage; // mengitung jumlah halaman
-
-        const firstData = (dataPage * nomor) - dataPage; // menentukan awal data tiap halaman
-
-
-        return new Promise((resolve, reject) => {
-            connection.query("SELECT * FROM product_name WHERE stok != 0 AND id_category LIKE ? AND name LIKE ? ORDER BY name ASC LIMIT ?, ?", ['%' + category + '%','%' + keyword + '%',firstData, dataPage], (err, result) => {
-                if (!err) {
-                    const page = Math.ceil(totalPage);
-                    if (nomor <= page) {
-                        resolve([page, `Curren Page: ${nomor}`, result]);
-                    }
-                } else {
-                    reject(new Error(err));
-                }
-            })
-        })
-    },
-
     justPagination: (nomor, total) => {
 
         const dataPage = 12;// jumlah data per halaman
@@ -117,7 +90,7 @@ module.exports = {
 
 
         return new Promise((resolve, reject) => {
-            connection.query("SELECT * FROM product_name ORDER BY name ASC LIMIT ?, ?", [firstData, dataPage], (err, result) => {
+            connection.query("SELECT * FROM product_name where stok != 0 ORDER BY name ASC LIMIT ?, ?", [firstData, dataPage], (err, result) => {
                 if (!err) {
                     const page = Math.ceil(totalPage);
                     if (nomor <= page) {

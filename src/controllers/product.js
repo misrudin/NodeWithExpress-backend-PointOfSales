@@ -14,43 +14,26 @@ module.exports = {
 
         getProduct: (req, res) => {
             const page = req.query.page;
-            const keyword = req.query.keyword;
-            const category = req.query.category;
-            if(!keyword){
                 conn.query("SELECT COUNT(*) as total FROM product_name", (err, result) => {
-                    const total = result[0].total;//jumlah seluruh data
+                    const total = result[0].total;
 
                     if (page > 0) {
                         productModel.justPagination(page, total)
                             .then((result) => {
-                                res.json(result);
+                                miscHElper.response(res, result, 200)
                             })
                             .catch(err => console.log(err));
                     }
 
                 });
 
-            }else if(keyword){
-                conn.query("SELECT COUNT(*) as total FROM product_name", (err, result) => {
-                    const total = result[0].total;//jumlah seluruh data
-
-                    if (page > 0) {
-                        productModel.filterPagination(page, total, keyword, category)
-                            .then((result) => {
-                                res.json(result);
-                            })
-                            .catch(err => console.log(err));
-                    }
-
-                });
-            }
     },
 
     productDetail: (req, res) => {
         const id_product = req.params.id_product;
         productModel.productDetail(id_product)
             .then((result) => {
-                res.json(result)
+                miscHElper.response(res, result, 200)
             })
             .catch(err => console.log(err));
     },
@@ -69,7 +52,8 @@ module.exports = {
         }
         productModel.insertProduct(data)
             .then((result) => {
-                miscHElper.response(res, result, 200)
+                const dataResponse = { id: result.insertId, ...data }
+                miscHElper.response(res, dataResponse, 200)
             })
             .catch(err => res.json(err));
     },
@@ -80,10 +64,9 @@ module.exports = {
         if(!req.file){
             const data = {
                 name,
-                description, //kalu sama key dan valuenya gini
+                description,
                 price,
                 stok,
-                // image: `http://localhost:4001/uploads/${req.file.filename}`,
                 id_category,
                 update_at: date_update
             }
@@ -93,7 +76,8 @@ module.exports = {
                     process.env.URL = result[0].image;
                     productModel.updateProduct(data, id_product)
                         .then((result) => {
-                            res.json(result)
+                            const dataResponse = { id: id_product, ...data }
+                            miscHElper.response(res, dataResponse, 200)
                         })
                         .catch(err => console.log(err));
                 } else {
@@ -117,7 +101,8 @@ module.exports = {
                     process.env.URL = result[0].image;
                     productModel.updateProduct(data, id_product)
                         .then((result) => {
-                            res.json(result)
+                            const dataResponse = { id: id_product, ...data }
+                            miscHElper.response(res, dataResponse, 200)
                              const img = process.env.URL.replace(process.env.URL_IMG, '');
                                 fs.unlink(img, (err) => {
                                     if (err) {

@@ -17,7 +17,8 @@ module.exports = {
 
         categoryModel.insertCategory(data)
             .then((result) => {
-                miscHElper.response(res, result, 200)
+                const dataResponse = { id: result.insertId, ...data }
+                miscHElper.response(res, dataResponse, 200)
             })
             .catch(err => console.log(err));
     },
@@ -30,7 +31,8 @@ module.exports = {
 
         categoryModel.updateCategory(data, id_category)
             .then((result) => {
-                miscHElper.response(res, result, 200)
+                const dataResponse = { id: id_category, ...data }
+                miscHElper.response(res, dataResponse, 200)
             })
             .catch(err => console.log(err))
     },
@@ -40,7 +42,8 @@ module.exports = {
 
         categoryModel.deleteCategory(id_category)
             .then((result) => {
-                miscHElper.response(res, result, 200)
+                const dataResponse = { id: id_category}
+                miscHElper.response(res, dataResponse, 200)
             })
             .catch(err => console.log(err));
     }
