@@ -46,7 +46,7 @@ module.exports = {
             description,
             price,
             stok,
-            image: process.env.URL_IMG + `${req.file.filename}`,
+            image: process.env.URL_IMG + `uploads/${req.file.filename}`,
             id_category,
             created_at: date_created
         }
@@ -91,7 +91,7 @@ module.exports = {
                 description, //kalu sama key dan valuenya gini
                 price,
                 stok,
-                image: process.env.URL_IMG + `${req.file.filename}`,
+                image: process.env.URL_IMG + `uploads/${req.file.filename}`,
                 id_category,
                 update_at: date_update
             }

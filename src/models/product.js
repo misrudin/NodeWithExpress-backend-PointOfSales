@@ -53,7 +53,7 @@ module.exports = {
     deleteProduct: (id_product) => {
         return new Promise((resolve, reject) => {
             connection.query("SELECT image FROM product_name WHERE id=?", id_product, (err, result) => {
-                const img = result[0].image.replace('http://localhost:4001/', '');
+                const img = result[0].image.replace(process.env.URL_IMG, '');
                 fs.unlink(img, (err) => {
                     if (err) throw err;
                 });
