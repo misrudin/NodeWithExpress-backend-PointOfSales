@@ -124,8 +124,8 @@ module.exports = {
         const id_product = req.params.id_product;
         productModel.deleteProduct(id_product)
             .then((result) => {
-                const dataResult=id_product
-                miscHElper.response(res, dataResult, 200)
+                const dataResponse = { id: id_product}
+                miscHElper.response(res, dataResponse, 200)
             })
             .catch(err => console.log(err));
     },
