@@ -17,8 +17,9 @@ module.exports = {
 
         categoryModel.insertCategory(data)
             .then((result) => {
+
                 const dataResponse = { id: result.insertId, ...data }
-                miscHElper.response(res, dataResponse, 200)
+                miscHElper.response(res, result, 200)
             })
             .catch(err => console.log(err));
     },
