@@ -38,15 +38,15 @@ URL_IMG= "http://localhost:4001/" //root project for save image upload
 
 ## End Point
 
-Before run End Point you must add token in headers, folow this step:
+####Before run End Point you must add token in headers, folow this step:
 **POST**
-*'http://localhost:4001/api/v1/auth/register'
+*`http://localhost:4001/api/v1/auth/register`
 	* ``` { "username": "sample", "password": "****"} ```
 
 **POST**
-*'http://localhost:4001/api/v1/auth/login'
+*`http://localhost:4001/api/v1/auth/login`
 	* ``` { "username": "sample", "password": "****"} ```
-	response: {token:xxxx} //copy and paste token into Headers - token
+	//response: {token:xxxx} //copy and paste token into Headers - token
 
 **1. GET**
 * `http://localhost:4001/api/v1/product?page=1`
