@@ -49,17 +49,27 @@ Before run End Point you must add token in headers, folow this step:
 	response: {token:xxxx} //copy and paste token into Headers - token
 
 **1. GET**
-* `http://localhost:4001/api/v1/product`
+* `http://localhost:4001/api/v1/product?page=1`
+* `http://localhost:4001/api/v1/category`
+* `http://localhost:4001/api/v1/cart`
 
 
 **2. POST**
 * `http://localhost:4001/api/v1/product`
     * ``` { "name": "Sambel", "description": "sambel sunda", "price": 1000,"stok": 10,"image":file } ``` // use form-data
 
+* `http://localhost:4001/api/v1/category`
+    * ``` { "category": "Minuman"} ```
+
+* `http://localhost:4001/api/v1/cart`
+    * ``` { "id_user":1, "id_product":1, "qty":1 }  ```
 
 **3. PATCH**
 * `http://localhost:4001/api/v1/product/:id`
     * ``` { "name": "Sambel", "description": "sambel sunda", "price": 1000,"stok": 20,"image":file } ``` // use form-data
+
+* `http://localhost:4001/api/v1/category/:id`
+    * ``` { "category": "Minuman"} ```
 
 
 **4. DELETE**
