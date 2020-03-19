@@ -1,52 +1,62 @@
-# NodeWithExpress - Backend
-First Project-Task Week 1
+<h1 align="center">hayuu cafe - Backend Point Of Sales</h1>
 
-## Preparation
-make sure `xampp mysql` is active.
 
-#### Import database
-Import databse `database/post.sql` into mysql phpmyadmin.
+Hayuu cafe is an application to manage sales at hayuu cafe. Built with NodeJs using the ExpressJs Framework.
+Express.js is a web application framework for Node.js. [More about Express](https://en.wikipedia.org/wiki/Express.js)
+## Built With
+[![Express.js](https://img.shields.io/badge/Express.js-4.x-blue.svg?style=rounded-square)](https://expressjs.com/en/starter/installing.html)
+[![Node.js](https://img.shields.io/badge/Node.js-v.10.16-green.svg?style=rounded-square)](https://nodejs.org/)
 
-#### Running the program
-Open the code editor and terminal then write the following code in the terminal.
+## Requirements
+1. <a href="https://nodejs.org/en/download/">Node Js</a>
+2. Node_modules
+3. <a href="https://www.getpostman.com/">Postman</a>
+4. Web Server (ex. localhost)
+
+## How to run the app ?
+1. Open app's directory in CMD or Terminal
+2. Type `npm install`
+3. Make new file a called **.env**, set up first [here](#set-up-env-file)
+4. Turn on Web Server and MySQL can using Third-party tool like xampp, etc.
+5. Create a database with the name note, and Import file [note.sql](note.sql) to **phpmyadmin**
+6. Open Postman desktop application or Chrome web app extension that has installed before
+7. Choose HTTP Method and enter request url.(ex. localhost:3000/notes)
+8. You can see all the end point [here](#end-point)
+
+## Set up .env file
+Open .env file on your favorite code editor, and copy paste this code below :
 ```
-$ cd `{folder name}`
-$ npm install
-$ node app.js
-```
-
-### Run the method below using `postman`
-[Download Postman](https://www.postman.com/) - To test `GET` `POST` `PATCH` and `DELETE` method.
-#### Example method
-* ###### Register yuor acount Username and password:
-
-`POST` `http://localhost:4001/api/v1/auth/register`
-
-![register](https://user-images.githubusercontent.com/37394664/73860911-e0013780-486e-11ea-9074-b942fa19bf4f.png)
-
-* ###### Login to get the valid Token.
-
-Select method `POST` `http://localhost:4001/api/v1/auth/login`
-
-Copy valid token and paste to Headers, don't forget to create key: my-token.
-
-![lgn](https://user-images.githubusercontent.com/37394664/73808615-228d2a80-4803-11ea-8d5f-245fd6ddae16.png)
-
-
-#### When I will get all data product, then i do:
-
-Select method `GET` in Postman, and insert the URL.
-```
-http://localhost:4001/api/v1/product
+PORT=3000
+HOST=localhost
+USER=root // default
+PASS= // default
+DATABASE=note
+NODE_ENV=development node server.js
 ```
 
-#### For other methods, you can follow the coding in the routers
+## End Point
+**1. GET**
+* `/notes`
+* `/notes?search=lorem&sort=ASC&limit=5&page=1`
+* `/note/:id` (Get note by id)
+* `/categories`
+* `/categories?search=Diary`
+* `/category/:id` (Get category by id)
 
-![login](https://user-images.githubusercontent.com/37394664/73808522-c5917480-4802-11ea-8704-009f02a0cf86.png)
 
-* Auth
-* Category
-* Product
-* Cart
-* Checkout
-* payment
+**2. POST**
+* `/note`
+    * ``` { "title": "Party", "note": "Herman's Party at 19.00", "category": 1 } ```
+
+* `/category`
+    * ``` { "categoryName": "Category6" } ```
+
+**3. PATCH**
+* `/note/:id` (Update note by id)
+   * ``` { "title": "Party", "note": "Herman's Party at 18.00", "category": 2 } ```
+* `/category/:id` (Update category by id)
+   * ``` { "categoryName": "Category8" } ```
+
+**4. DELETE**
+* `/note/:id` (Delete note by id)
+* `/category/:id` (Delete category by id)
