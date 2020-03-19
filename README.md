@@ -37,19 +37,30 @@ URL_IMG= "http://localhost:4001/" //root project for save image upload
 ```
 
 ## End Point
+
+Before run End Point you must add token in headers, folow this step:
+**POST**
+*'http://localhost:4001/api/v1/auth/register'
+	* ``` { "username": "sample", "password": "****"} ```
+
+**POST**
+*'http://localhost:4001/api/v1/auth/login'
+	* ``` { "username": "sample", "password": "****"} ```
+	response: {token:xxxx} //copy and paste token into Headers - token
+
 **1. GET**
-* `/product`
+* `http://localhost:4001/api/v1/product`
 
 
 **2. POST**
-* `/product`
-    * ``` { "name": "Sambel", "description": "sambel sunda", "price": 1000,"stok": 10, } ```
+* `http://localhost:4001/api/v1/product`
+    * ``` { "name": "Sambel", "description": "sambel sunda", "price": 1000,"stok": 10,"image":file } ``` // use form-data
 
 
 **3. PATCH**
-* `/note/:id` (Update note by id)
-   * ``` { "title": "Party", "note": "Herman's Party at 18.00", "category": 2 } ```
+* `http://localhost:4001/api/v1/product/:id`
+    * ``` { "name": "Sambel", "description": "sambel sunda", "price": 1000,"stok": 20,"image":file } ``` // use form-data
 
 
 **4. DELETE**
-* `/note/:id` (Delete note by id)
+* `http://localhost:4001/api/v1/product/:id` (Delete product by id)
