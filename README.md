@@ -33,7 +33,7 @@ DB_PASSWORD = "" //default
 DB_NAME = "post"
 PRIVATE_KEY = "private"
 URL=""
-URL_IMG= "http://52.70.29.181:4001/"
+URL_IMG= "http://localhost:4001/" //root project for save image upload
 ```
 
 ## End Point
