@@ -74,3 +74,4 @@ URL_IMG= "http://localhost:4001/" //root project for save image upload
 
 **4. DELETE**
 * `http://localhost:4001/api/v1/product/:id` (Delete product by id)
+* `http://localhost:4001/api/v1/category/:id` (Delete category by id)
