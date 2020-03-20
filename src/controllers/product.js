@@ -14,26 +14,6 @@ module.exports = {
 
         getProduct: (req, res) => {
             const page = req.query.page;
-            const q = req.query.q;
-            if(q){
-                conn.query("SELECT COUNT(*) as total FROM product_name where name LIKE ? or id_category like ?",['%' + q + '%','%' + q + '%'], (err, result) => {
-                    if(result > 0){
-                    const total = result[0].total;
-
-                    if (page > 0) {
-                        productModel.justPagination(q,page, total)
-                            .then((result) => {
-                                miscHElper.response(res, result, 200)
-                            })
-                            .catch(err => console.log(err));
-                    }
-
-                }else{
-                    miscHElper.response(res, null, 200)
-                }
-
-                });
-            }else{
                 conn.query("SELECT COUNT(*) as total FROM product_name", (err, result) => {
                     const total = result[0].total;
 
@@ -46,8 +26,6 @@ module.exports = {
                     }
 
                 });
-                }
-
     },
 
     productDetail: (req, res) => {
