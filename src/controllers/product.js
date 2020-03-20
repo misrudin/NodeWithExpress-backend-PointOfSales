@@ -130,8 +130,8 @@ module.exports = {
     },
 
     fillterProduct: (req, res) => {
-        const keyword = req.query.keyword;
-        productModel.fillterProduct(keyword)
+        const q = req.query.q;
+        productModel.fillterProduct(q)
             .then((result) => {
                 miscHElper.response(res, result, 200)
             })

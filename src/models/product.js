@@ -68,9 +68,9 @@ module.exports = {
         });
     },
 
-    fillterProduct: (keyword) => {
+    fillterProduct: (q) => {
         return new Promise((resolve, reject) => {
-            connection.query("SELECT product_name.*, category.nama_category FROM product_name INNER JOIN category ON product_name.id_category=category.id WHERE product_name.name LIKE ? ", '%' + keyword + '%', (err, result) => {
+            connection.query("SELECT product_name.*, category.nama_category FROM product_name INNER JOIN category ON product_name.id_category=category.id WHERE product_name.name LIKE ? ", '%' + q + '%', (err, result) => {
                 if (!err) {
                     resolve(result);
                 } else {
