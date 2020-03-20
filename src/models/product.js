@@ -74,7 +74,7 @@ module.exports = {
                 if (!err) {
                     resolve(result);
                 } else {
-                    reject(new Error(err));
+                    reject(new Error(err)); 
                 }
             });
         });
@@ -108,7 +108,7 @@ module.exports = {
             connection.query("SELECT * FROM product_name WHERE id_category LIKE ?", '%' + id + '%', (err, result) => {
                 if (!err) {
                     resolve(result);
-                } else {
+                } else {    
                     reject(new Error(err));
                 }
             })
