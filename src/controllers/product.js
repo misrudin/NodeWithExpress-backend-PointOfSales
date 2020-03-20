@@ -17,6 +17,7 @@ module.exports = {
             const q = req.query.q;
             if(q){
                 conn.query("SELECT COUNT(*) as total FROM product_name where name LIKE ? or id_category like ?",['%' + q + '%','%' + q + '%'], (err, result) => {
+                    if(result > 0){
                     const total = result[0].total;
 
                     if (page > 0) {
@@ -25,6 +26,8 @@ module.exports = {
                                 miscHElper.response(res, result, 200)
                             })
                             .catch(err => console.log(err));
+                    }
+                        
                     }
 
                 });
