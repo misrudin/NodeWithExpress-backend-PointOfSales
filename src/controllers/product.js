@@ -14,6 +14,21 @@ module.exports = {
 
         getProduct: (req, res) => {
             const page = req.query.page;
+            const q = req.query.q;
+            if(q){
+                conn.query("SELECT COUNT(*) as total FROM product_name where name LIKE ? or id_category like ?",['%' + q + '%','%' + q + '%'], (err, result) => {
+                    const total = result[0].total;
+
+                    if (page > 0) {
+                        productModel.justPagination(q,page, total)
+                            .then((result) => {
+                                miscHElper.response(res, result, 200)
+                            })
+                            .catch(err => console.log(err));
+                    }
+
+                });
+            }else{
                 conn.query("SELECT COUNT(*) as total FROM product_name", (err, result) => {
                     const total = result[0].total;
 
@@ -26,6 +41,7 @@ module.exports = {
                     }
 
                 });
+                }
 
     },
 
@@ -90,7 +106,7 @@ module.exports = {
                 name,
                 description, //kalu sama key dan valuenya gini
                 price,
-                stok,
+                stok, 
                 image: process.env.URL_IMG + `uploads/${req.file.filename}`,
                 id_category,
                 update_at: date_update
