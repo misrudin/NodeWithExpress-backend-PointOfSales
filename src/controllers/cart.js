@@ -4,8 +4,8 @@ const miscHelper = require('../helpers/helpers');
 module.exports = {
     getAllCart: (req, res) => {
         cartModel.getAllCart()
-            .then((result,qty) => {
-                miscHelper.responseCart(res, result,qty, 200);
+            .then((result) => {
+                miscHelper.response(res, result, 200);
             })
             .catch(err => console.log(err))
     },
@@ -20,7 +20,7 @@ module.exports = {
     },
 
     addToCart: (req, res) => {
-        const { id_user, id_product, qty } = req.body;
+        const { id_user, id_product, qty,name,image,price } = req.body;
         const date_add = new Date();
         const data = {
             id_user,
@@ -28,12 +28,15 @@ module.exports = {
             qty,
             date_add: date_add
         }
+        const otherdata={
+            name,image,price
+        }
         if (data.qty < 1) {
             res.send('Cannot reduce!')
         } else {
             cartModel.addToCart(data)
                 .then((result) => {
-                    const dataResponse = { id: result.insertId, ...data }
+                    const dataResponse = { id: result.insertId, ...data,...otherdata }
                     miscHelper.response(res, dataResponse, 200)
                 })
                 .catch(err => console.log(err));
@@ -55,7 +58,8 @@ module.exports = {
 
         cartModel.deleteCart(id_cart)
             .then((result) => {
-                miscHelper.response(res, result, 200);
+                const dataResponse = { id: id_cart }
+                    miscHelper.response(res, dataResponse, 200)
             })
             .catch(err => console.log(err));
     },

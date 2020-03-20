@@ -70,7 +70,7 @@ module.exports = {
 
     filterProduct: (q) => {
         return new Promise((resolve, reject) => {
-            connection.query("SELECT * FORM product_name WHERE name LIKE ?", '%' + q + '%', (err, result) => {
+            connection.query("SELECT * FORM product_name WHERE name LIKE ?", '%' + query + '%', (err, result) => {
                 if (!err) {
                     resolve(result);
                 } else {
@@ -105,7 +105,7 @@ module.exports = {
 
     sortByCategory: (id) => {
         return new Promise((resolve, reject) => {
-            connection.query("SELECT * FROM product_name WHERE id_category LIKE ?", '%' + id + '%', (err, result) => {
+            connection.query("SELECT * FROM product_name WHERE id_category LIKE = ?", '%' + id + '%', (err, result) => {
                 if (!err) {
                     resolve(result);
                 } else {    
