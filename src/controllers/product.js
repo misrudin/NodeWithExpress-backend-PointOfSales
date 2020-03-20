@@ -129,9 +129,9 @@ module.exports = {
             .catch(err => console.log(err));
     },
 
-    fillterProduct: (req, res) => {
+    filterProduct: (req, res) => {
         const q = req.query.q;
-        productModel.fillterProduct(q)
+        productModel.filterProduct(q)
             .then((result) => {
                 miscHElper.response(res, result, 200)
             })
