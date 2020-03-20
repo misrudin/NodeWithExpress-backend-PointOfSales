@@ -27,8 +27,10 @@ module.exports = {
                             })
                             .catch(err => console.log(err));
                     }
-                        
-                    }
+
+                }else{
+                    miscHElper.response(res, null, 200)
+                }
 
                 });
             }else{
