@@ -141,26 +141,3 @@ module.exports = {
     }
 
 }  // end code
-
-    pagefilter: (nomor, total) => {
-
-        const dataPage = 12;// jumlah data per halaman
-
-        const totalPage = total / dataPage; // mengitung jumlah halaman
-
-        const firstData = (dataPage * nomor) - dataPage; // menentukan awal data tiap halaman
-
-
-        return new Promise((resolve, reject) => {
-            connection.query("SELECT * FROM product_name where stok != 0 ORDER BY name ASC LIMIT ?, ?", [firstData, dataPage], (err, result) => {
-                if (!err) {
-                    const page = Math.ceil(totalPage);
-                    if (nomor <= page) {
-                        resolve([page, `Curren Page: ${nomor}`, result]);
-                    }
-                } else {''
-                    reject(new Error(err));
-                }
-            })
-        })
-    },
