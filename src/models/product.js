@@ -80,7 +80,7 @@ module.exports = {
         });
     },
 
-    justPagination: (q,nomor, total) => {
+    justPagination: (nomor, total) => {
 
         const dataPage = 12;// jumlah data per halaman
 
