@@ -64,7 +64,7 @@ Router.delete('/:id_product', auth.verify,  productController.deleteProduct); //
 // Router.get('/', auth.verify, productController.pagination); //pagination
 Router.get('/category', productController.sortByCategory); //sort by category
 
-Router.post('/filter', productController.fillterProduct); //filter by name
+Router.get('/filter', productController.fillterProduct); //filter by name
 
 Router.patch('/addstok/:id_product',  auth.verify,  productController.addStok); //add stok
 
