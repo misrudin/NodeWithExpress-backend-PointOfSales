@@ -12,20 +12,23 @@ module.exports = {
                     .catch(err => console.log(err));
         },
 
-        getProduct: (req, res) => {
-            const page = req.query.page;
-                conn.query("SELECT COUNT(*) as total FROM product_name", (err, result) => {
-                    const total = result[0].total;
-
+    getProduct: (req, res) => {
+        const {key,page} = req.query;
+        conn.query("SELECT COUNT(*) as total FROM product_name where name like ?",'%' + key + '%', (err, result) => {
+                const total = result[0].total;
+                if(total >0){
                     if (page > 0) {
-                        productModel.justPagination(page, total)
+                        productModel.justPagination(key,page, total)
                             .then((result) => {
                                 miscHElper.response(res, result, 200)
                             })
                             .catch(err => console.log(err));
                     }
-
-                });
+            }else{
+                miscHElper.response(res, {}, 201)
+            }
+        });     
+            
     },
 
     productDetail: (req, res) => {
@@ -130,8 +133,9 @@ module.exports = {
     },
 
     filterProduct: (req, res) => {
-        const q = req.query.q;
-        productModel.filterProduct(q)
+        const {qey} = req.query;
+        console.log('qey')
+        productModel.filterProduct(qey)
             .then((result) => {
                 miscHElper.response(res, result, 200)
             })
@@ -140,7 +144,8 @@ module.exports = {
 
     sortByCategory: (req, res) => {
         const id = req.query.id;
-        productModel.sortByCategory(id)
+        // console.log('halo')
+        productModel.sortByCategory(id) 
             .then((result) => {
                 miscHElper.response(res, result, 200)
             })
@@ -162,6 +167,14 @@ module.exports = {
         productModel.addStok(stokAdd, id_product)
             .then((result) => {
                 res.json(result)
+            })
+            .catch(err => console.log(err));
+    },
+
+    filterStok: (req, res) => {
+        productModel.filterStok()
+            .then((result) => {
+                miscHElper.response(res, result, 200)
             })
             .catch(err => console.log(err));
     }

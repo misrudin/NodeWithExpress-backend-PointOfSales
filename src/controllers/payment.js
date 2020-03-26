@@ -42,5 +42,13 @@ module.exports = {
             miscHelper.response(res, result, 200)
         })
         .catch(err=> console.log(err))
+    },
+
+    detail:(req,res)=>{
+      paymentModel.detail()
+        .then((result) =>{
+            miscHelper.response(res, result, 200)
+        })
+        .catch(err=> console.log(err))  
     }
 }

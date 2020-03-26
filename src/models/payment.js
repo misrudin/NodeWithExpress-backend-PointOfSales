@@ -59,5 +59,19 @@ module.exports = {
                 }
             })
         })
-    }
+    },
+
+    detail:()=>{
+        return new Promise((resolve,reject)=>{
+            conn.query("SELECT detail.*,product_name.name FROM detail INNER JOIN product_name ON product_name.id = detail.id_product",(err,result)=>{
+                 if (!err) {
+                    resolve(result);
+                } else {
+                    reject(new Error(err)); 
+                }
+            })
+        })
+    },
+
+
 } //end code

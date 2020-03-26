@@ -4,7 +4,7 @@ const fs = require('fs');
 module.exports = {
     getProduct: () => {
         return new Promise((resolve, reject) => {
-            connection.query("SELECT product_name.*,category.nama_category FROM product_name INNER JOIN category ON product_name.id_category=category.id order by product_name.created_at desc", (err, result) => {
+            connection.query("SELECT product_name.*,category.nama_category FROM product_name INNER JOIN category ON product_name.id_category=category.id order by stok < 10 desc", (err, result) => {
                 if (!err) {
                     resolve(result);
                 } else {
@@ -68,9 +68,9 @@ module.exports = {
         });
     },
 
-    filterProduct: (q) => {
+    filterProduct: (key) => {
         return new Promise((resolve, reject) => {
-            connection.query("SELECT * FORM product_name WHERE name LIKE ?", '%' + query + '%', (err, result) => {
+            connection.query("SELECT * FROM product_name WHERE name LIKE ?", '%' + key + '%', (err, result) => {
                 if (!err) {
                     resolve(result);
                 } else {
@@ -80,7 +80,21 @@ module.exports = {
         });
     },
 
-    justPagination: (nomor, total) => {
+    filterStok: (key) => {
+        return new Promise((resolve, reject) => {
+            connection.query("SELECT * FROM product_name WHERE stok < 10", (err, result) => {
+                if (!err) {
+                    resolve(result);
+                } else {
+                    reject(new Error(err)); 
+                }
+            });
+        });
+    },
+
+
+
+    justPagination: (key,nomor, total) => {
 
         const dataPage = 12;// jumlah data per halaman
 
@@ -90,7 +104,7 @@ module.exports = {
 
 
         return new Promise((resolve, reject) => {
-            connection.query("SELECT * FROM product_name ORDER BY name ASC LIMIT ?, ?", [firstData, dataPage], (err, result) => {
+            connection.query("SELECT * FROM product_name where name like ? ORDER BY name ASC LIMIT ?, ?", ['%' + key + '%',firstData, dataPage], (err, result) => {
                 if (!err) {
                     const page = Math.ceil(totalPage);
                     if (nomor <= page) {
@@ -105,14 +119,14 @@ module.exports = {
 
     sortByCategory: (id) => {
         return new Promise((resolve, reject) => {
-            connection.query("SELECT * FROM product_name WHERE id_category LIKE = ?", '%' + id + '%', (err, result) => {
+            connection.query("SELECT * FROM product_name WHERE id_category LIKE ? order by stok < 10 desc", '%' + id + '%', (err, result) => {
                 if (!err) {
                     resolve(result);
-                } else {    
-                    reject(new Error(err));
+                } else {
+                    reject(new Error(err)); 
                 }
-            })
-        })
+            });
+        });
     },
     sortUpdate: (date_update) => {
         return new Promise((resolve, reject) => {

@@ -10,6 +10,7 @@ router.delete('/:id_payment', auth.verify, paymentController.deletePayment);
 router.get('/all',auth.verify, paymentController.incomeToday);
 
 router.get('/detail/:faktur', auth.verify, paymentController.detailPayment)
+router.get('/detailall', auth.verify, paymentController.detail)
 
 
 module.exports = router;

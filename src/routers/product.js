@@ -38,7 +38,7 @@ const upload = multer({ //multer settings
 
 Router.get('/',auth.verify, productController.getProduct); //get all prod by page and filter
 Router.get('/all',auth.verify, productController.getAllProduct); //get all prod by page and filter
-Router.get('/:id_product',auth.verify, productController.productDetail); // get by id
+// Router.get('/:id_product',auth.verify, productController.productDetail); // get by id
 
 Router.post('/',auth.verify,(req,res,next)=>{
     upload(req,res,(err)=>{
@@ -62,9 +62,10 @@ Router.patch('/:id_product', auth.verify,(req,res,next)=>{
 
 Router.delete('/:id_product', auth.verify,  productController.deleteProduct); //delete by id
 // Router.get('/', auth.verify, productController.pagination); //pagination
-Router.get('/category', productController.sortByCategory); //sort by category
+Router.get('/category',auth.verify, productController.sortByCategory); //sort by category
 
 Router.get('/filter', productController.filterProduct); //filter by name
+Router.get('/stok', productController.filterStok); //limit stok
 
 Router.patch('/addstok/:id_product',  auth.verify,  productController.addStok); //add stok
 
