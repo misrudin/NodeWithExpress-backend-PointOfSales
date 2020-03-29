@@ -1,6 +1,7 @@
 const productModel = require('../models/product');
 const miscHElper = require('../helpers/helpers');
 const conn = require('../configs/db')
+const fs = require('fs');
 
 
 module.exports = {
@@ -25,7 +26,7 @@ module.exports = {
                             .catch(err => console.log(err));
                     }
             }else{
-                miscHElper.response(res, {}, 201)
+                miscHElper.response(res, [1,"Curren Page: 1",[]], 201)
             }
         });     
             

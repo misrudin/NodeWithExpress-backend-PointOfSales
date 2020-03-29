@@ -13,4 +13,8 @@ router.get('/detail/:faktur', auth.verify, paymentController.detailPayment)
 router.get('/detailall', auth.verify, paymentController.detail)
 
 
+router.get('/today', auth.verify, paymentController.history)
+
+
+
 module.exports = router;

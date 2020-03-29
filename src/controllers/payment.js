@@ -50,5 +50,14 @@ module.exports = {
             miscHelper.response(res, result, 200)
         })
         .catch(err=> console.log(err))  
+    },
+
+    history:(req,res)=>{
+        const time=req.query.time
+      paymentModel.history(time)
+        .then((result) =>{
+            miscHelper.response(res, result, 200)
+        })
+        .catch(err=> console.log(err))  
     }
 }
