@@ -25,7 +25,7 @@ Express.js is a web application framework for Node.js. [More about Express](http
 1. [![Node.js](https://img.shields.io/badge/Node.js-v.10.16-green.svg?style=rounded-square)](https://nodejs.org/)	
 2. [![Express.js](https://img.shields.io/badge/Express.js-4.x-blue.svg?style=rounded-square)](https://expressjs.com/en/starter/installing.html)
 3. <a href="https://www.getpostman.com/">Postman</a>
-4. Web Server (ex. xampp)
+4. [Web Server (ex. xampp)](https://www.apachefriends.org/index.html)
 </section>
 
 
@@ -36,10 +36,10 @@ Express.js is a web application framework for Node.js. [More about Express](http
 2. Type `npm install`
 3. Make new file **.env** in root project folder, set up first [here](#env)
 4. Turn on Web Server and MySQL can using Third-party tool like xampp, etc.
-5. Create a database post, and Import file [note.sql](database/post.sql) to **phpmyadmin**
+5. Create a database post, and Import file [post.sql](database/post.sql) to **phpmyadmin**
 6. Open Postman desktop application or Chrome web app extension that has installed before
 7. Choose HTTP Method and enter request url.(ex. localhost:4001/api/v1)
-8. You can see all the end point [here](#endpoint)
+8. You can see all the end point [here](#end-point)
 </section>
 
 <section id="setup-env">
