@@ -7,7 +7,7 @@ const controlerAuth = require("../controllers/auth");
 router.post("/login", controlerAuth.loginUser); // router user
 router.delete('/logout', controlerAuth.logout) // logout
 router.post("/register", controlerAuth.register);
-router.get("/user", auth.verify, controlerAuth.getAll)
-router.get("/user/:id", auth.verify, controlerAuth.getUserByID)
+router.get("/user", controlerAuth.getAll)
+router.get("/user/:id", controlerAuth.getUserByID)
 
 module.exports = router;
