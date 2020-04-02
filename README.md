@@ -12,7 +12,7 @@ Express.js is a web application framework for Node.js. [More about Express](http
 	<ul>
 		<li><a href="#requirements">Requirements</a></li>
 		<li><a href="#how-to-run">How To Run</a></li>
-		<li><a href="#setup-env">Setup env</a></li>
+		<li><a href="#set-up-env-file">Setup .env</a></li>
 		<li><a href="#end-point">End Point</a></li>
 		<li><a href="#related-project">Related Project</a></li>
 	</ul>
@@ -44,7 +44,7 @@ Express.js is a web application framework for Node.js. [More about Express](http
 
 <section id="setup-env">
 	
-## Set up .env file
+## Set up env file
 Open .env file on your favorite code editor, and copy paste this code below :
 ```
 SERVER_PORT = 4001
