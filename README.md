@@ -31,7 +31,7 @@ Express.js is a web application framework for Node.js. [More about Express](http
 
 <section id="how-to-run">
 	
-## How to run the app
+## How to run
 1. Open app's directory in CMD or Terminal
 2. Type `npm install`
 3. Make new file **.env** in root project folder, set up first [here](#env)
